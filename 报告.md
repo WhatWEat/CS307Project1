@@ -8,7 +8,7 @@
 
 绘制软件：boardmix，https://boardmix.cn/
 
-1.对于较难以描述的City、Category、SubReply等，我们分别为他们添加了键city_id、category_id、subReply_id以便于约束
+1.对于较难以描述的City、Entity.Category、SubReply等，我们分别为他们添加了键city_id、category_id、subReply_id以便于约束
 2.SubReply依附于Reply存在，我们将其定义为弱实体集
 
 ## Part2 建表
