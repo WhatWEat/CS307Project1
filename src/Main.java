@@ -2,6 +2,8 @@ import Entity.Author;
 import Entity.Category;
 import Entity.City;
 import Entity.Post;
+import java.text.SimpleDateFormat;
+import java.util.concurrent.ThreadLocalRandom;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,10 +18,8 @@ public class Main {
     static ArrayList<City> cities = new ArrayList<>();
     public static void main(String[] args) {
 
-        int numOfPost = 0;
-
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("E:\\CS307\\project1\\project1\\src\\posts.json"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("posts.json"));
             StringBuilder jsonString = new StringBuilder();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -64,7 +64,7 @@ public class Main {
                 }
                 post.author = author;
 
-
+                //category
                 JSONArray categoryArray = jsonObject.getJSONArray("Category");
 
                 for (int j = 0; j < categoryArray.length();j++) {
@@ -80,27 +80,31 @@ public class Main {
                 }
             }
 
+            for (int i=0; i<jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                // Followed By
+                JSONArray followedByArray = jsonObject.getJSONArray("Authors Followed By");
+                for (int j = 0; j < followedByArray.length();j++) {
+                    Author author = new Author();
+                    author.id = followedByArray.getString(j);
+                    if (!authors.contains(author)){
+                        authors.add(author);
+                    }
+                    int index = authors.indexOf(author);
+                    posts.get(i).follow.add(authors.get(index));
+                }
+            }
+
             System.out.println("Finished!");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-//    static class author{
-//        String phoneNumber;
-//        String id;
-//        String registerTime;
-//        String name;
-//    }
-//    static class city{
-//        String name;
-//        String country;
-//
-//        public city(String name, String country) {
-//            this.name = name;
-//            this.country = country;
-//        }
-//    }
+    static Author createAuthor(String name){
+        Author author = new Author();
+        author.name = name;
+        return author;
+    }
 
     static void addStringList(Object[] in,JSONArray array,int index){
         int length = array.length();
