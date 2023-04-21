@@ -100,7 +100,17 @@ public class Main {
             for (int i = 0 ; i < jsonArray.length();i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 JSONArray authorLike = jsonObject.getJSONArray("Authors Who Liked the Post");
-
+                for (int j = 0 ; j < authorLike.length();j++) {
+                    posts.get(i).like.add(findIndex(authors,authorLike.getString(j)));
+                }
+            }
+            //shared
+            for (int i = 0 ;i<jsonArray.length();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                JSONArray authorShare = jsonObject.getJSONArray("Authors Who Shared the Post");
+                for (int j = 0 ; j < authorShare.length();j++) {
+                    posts.get(i).share.add(findIndex(authors,authorShare.getString(j)));
+                }
             }
 /*
 shared、like
