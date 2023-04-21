@@ -41,8 +41,11 @@ public class Main {
 
                 // city
                 String data = jsonObject.getString("Posting City");
-                String[] values = data.split(", ");
-                City city = new City(values[0],values[1] );
+                int lastPeriodIndex = data.lastIndexOf(", "); // 找到最后一个 “。 ” 的位置
+                String part1 = data.substring(0, lastPeriodIndex); // 截取分割后的第一部分
+                String part2 = data.substring(lastPeriodIndex + 2).trim(); // 截取分割后的第二部分
+//                String[] values = data.split(", ");
+                City city = new City(part1,part2);
                 if(cities.contains(city)){
                     City.id--;
                 } else {
