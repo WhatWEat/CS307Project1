@@ -70,11 +70,11 @@ public class Main {
 
                 JSONArray followedByArray = jsonObject.getJSONArray("Authors Followed By");
                 addStringList(follow,followedByArray,i);
-                JSONArray shareArray = jsonObject.getJSONArray("Authors Who Shared the Post");
+                JSONArray shareArray = jsonObject.getJSONArray("Authors Who Shared the Entity.Post");
                 addStringList(share,shareArray,i);
-                JSONArray likeArray = jsonObject.getJSONArray("Authors Who Liked the Post");
+                JSONArray likeArray = jsonObject.getJSONArray("Authors Who Liked the Entity.Post");
                 addStringList(like,likeArray,i);
-                JSONArray favoriteArray = jsonObject.getJSONArray("Authors Who Favorited the Post");
+                JSONArray favoriteArray = jsonObject.getJSONArray("Authors Who Favorited the Entity.Post");
                 addStringList(favorite,favoriteArray,i);
             }
             System.out.println("Finished!");
