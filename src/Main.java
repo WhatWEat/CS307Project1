@@ -17,7 +17,29 @@ public class Main {
     static ArrayList<Post> posts = new ArrayList<>();
     static ArrayList<City> cities = new ArrayList<>();
     public static void main(String[] args) {
+        loadPost();
+        /* TODO:
+            1. try to finish the loadReply() static method in Main.java like loadPost() method
+            2. start to design the framework of the insert part
+        */
+    }
+    static Author createAuthor(String name){
+        Author author = new Author();
+        author.name = name;
+        return author;
+    }
 
+    static Author findIndex(ArrayList<Author> authors ,String name){
+        for (Author temp : authors) {
+            if (temp.name.equals(name)) {
+                return temp;
+            }
+        }
+        Author author = new Author(name);
+        authors.add(author);
+        return author;
+    }
+    static void loadPost(){
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("posts.json"));
             StringBuilder jsonString = new StringBuilder();
@@ -85,15 +107,17 @@ public class Main {
                 // Followed By
                 JSONArray followedByArray = jsonObject.getJSONArray("Authors Followed By");
                 for (int j = 0; j < followedByArray.length();j++) {
-                    Author author = new Author();
-                    author.id = followedByArray.getString(j);
-                    if (!authors.contains(author)){
-                        authors.add(author);
-                    }
-                    int index = authors.indexOf(author);
-                    posts.get(i).follow.add(authors.get(index));
+                    String name = followedByArray.getString(j);
+                    Author author = findIndex(authors,name);
+                    posts.get(i).follow.add(author);
                 }
-
+                // Favorited
+                JSONArray favoriteArray = jsonObject.getJSONArray("Authors Who Favorited the Post");
+                for (int j = 0; j < favoriteArray.length();j++) {
+                    String name = favoriteArray.getString(j);
+                    Author author = findIndex(authors,name);
+                    posts.get(i).like.add(author);
+                }
             }
 
             //like
@@ -112,29 +136,9 @@ public class Main {
                     posts.get(i).share.add(findIndex(authors,authorShare.getString(j)));
                 }
             }
-/*
-shared、like
- */
-
-            System.out.println("Finished!");
+            System.out.println("Post.json is Finished!");
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    static Author createAuthor(String name){
-        Author author = new Author();
-        author.name = name;
-        return author;
-    }
-
-    static Author findIndex(ArrayList<Author> authors ,String name){
-        for (Author temp : authors) {
-            if (temp.name.equals(name)) {
-                return temp;
-            }
-        }
-        Author author = new Author(name);
-        authors.add(author);
-        return author;
     }
 }
