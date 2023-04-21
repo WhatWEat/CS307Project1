@@ -93,7 +93,18 @@ public class Main {
                     int index = authors.indexOf(author);
                     posts.get(i).follow.add(authors.get(index));
                 }
+
             }
+
+            //like
+            for (int i = 0 ; i < jsonArray.length();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                JSONArray authorLike = jsonObject.getJSONArray("Authors Who Liked the Post");
+
+            }
+/*
+shared、like
+ */
 
             System.out.println("Finished!");
         } catch (Exception e) {
@@ -106,12 +117,14 @@ public class Main {
         return author;
     }
 
-    static void addStringList(Object[] in,JSONArray array,int index){
-        int length = array.length();
-        String[] out = new String[length];
-        for (int i = 0 ; i < length ;i++){
-            out[i] = array.getString(i);
+    static Author findIndex(ArrayList<Author> authors ,String name){
+        for (Author temp : authors) {
+            if (temp.name.equals(name)) {
+                return temp;
+            }
         }
-        in[index] = out;
+        Author author = new Author(name);
+        authors.add(author);
+        return author;
     }
 }
