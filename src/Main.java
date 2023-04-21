@@ -29,7 +29,7 @@ public class Main {
                 jsonString.append(line); //逐行读取JSON字符串
             }
             bufferedReader.close(); //关闭文件流
-
+            String A;
             JSONArray jsonArray = new JSONArray(jsonString.toString());
 
             numOfPost = jsonArray.length();
