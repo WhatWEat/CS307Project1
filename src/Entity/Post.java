@@ -9,11 +9,13 @@ public class Post {
     public String content;
     public String post_time;
     public Author author = new Author();
+
     public ArrayList<Author> follow = new ArrayList<>();
     public ArrayList<Author> like = new ArrayList<>();
     public ArrayList<Author> favorite = new ArrayList<>();
     public ArrayList<Author> share = new ArrayList<>();
     public ArrayList<Category> categories = new ArrayList<>();
+    public ArrayList<Reply> replies = new ArrayList<>();
     public City city;
     public Post() {
     }
