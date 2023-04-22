@@ -19,7 +19,7 @@ Group Number: 307
 
 我们设计的ER图如下：
 
-
+![](https://github.com/WhatWEat/CS307Project1/blob/main/Img/ERimage.jpg)
 
 绘制软件：boardmix，https://boardmix.cn/
 
