@@ -20,6 +20,7 @@ public class Main {
     public static void main(String[] args) {
         loadPost();
         loadReply();
+        System.out.println();
         /* TODO:
             1. try to finish the loadReply() static method in Main.java like loadPost() method
             2. start to design the framework of the insert part
@@ -36,7 +37,7 @@ public class Main {
         return author;
     }
 
-    static Author findIndex(ArrayList<Author> authors, String name) {
+    static Author findAuthor(ArrayList<Author> authors, String name) {
         for (Author temp : authors) {
             if (temp.name.equals(name)) {
                 return temp;
@@ -125,15 +126,15 @@ public class Main {
                 JSONArray followedByArray = jsonObject.getJSONArray("Authors Followed By");
                 for (int j = 0; j < followedByArray.length(); j++) {
                     String name = followedByArray.getString(j);
-                    Author author = findIndex(authors, name);
+                    Author author = findAuthor(authors, name);
                     posts.get(i).follow.add(author);
                 }
                 // Favorited
                 JSONArray favoriteArray = jsonObject.getJSONArray("Authors Who Favorited the Post");
                 for (int j = 0; j < favoriteArray.length(); j++) {
                     String name = favoriteArray.getString(j);
-                    Author author = findIndex(authors, name);
-                    posts.get(i).like.add(author);
+                    Author author = findAuthor(authors, name);
+                    posts.get(i).favorite.add(author);
                 }
             }
 
@@ -142,7 +143,7 @@ public class Main {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 JSONArray authorLike = jsonObject.getJSONArray("Authors Who Liked the Post");
                 for (int j = 0; j < authorLike.length(); j++) {
-                    posts.get(i).like.add(findIndex(authors, authorLike.getString(j)));
+                    posts.get(i).like.add(findAuthor(authors, authorLike.getString(j)));
                 }
             }
             //shared
@@ -150,7 +151,7 @@ public class Main {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 JSONArray authorShare = jsonObject.getJSONArray("Authors Who Shared the Post");
                 for (int j = 0; j < authorShare.length(); j++) {
-                    posts.get(i).share.add(findIndex(authors, authorShare.getString(j)));
+                    posts.get(i).share.add(findAuthor(authors, authorShare.getString(j)));
                 }
             }
             System.out.println("Post.json is Finished!");
@@ -179,16 +180,16 @@ public class Main {
                 long subReplyStars = jsonObject.getLong("Secondary Reply Stars");
                 String subReplyAuthor = jsonObject.getString("Secondary Reply Author");
                 //reply  reply&author
-                Author authorOfReply = findIndex(authors, replyAuthor);
-                Reply reply = new Reply(content, stars, authorOfReply);
-                replies.add(reply);
+                Author authorOfReply = findAuthor(authors, replyAuthor);
+                Reply reply = findReply(content, stars, authorOfReply);
+                if(!replies.contains(reply)) replies.add(reply);
                 //reply&post
                 Post post = findPost(posts, post_id);
                 if (post != null) {
                     post.replies.add(reply);
                 }
                 //subReply  subReply&Author  subReply&Reply
-                Author authorOfSubReply = findIndex(authors, subReplyAuthor);
+                Author authorOfSubReply = findAuthor(authors, subReplyAuthor);
                 SubReply subReply = new SubReply(subReplyContent, subReplyStars, authorOfSubReply);
                 subReplies.add(subReply);
                 reply.subReplies.add(subReply);
@@ -199,6 +200,14 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    static Reply findReply(String content, Long stars, Author author) {
+        for (Reply temp : replies) {
+            if (temp.content.equals(content) && temp.stars == stars &&temp.author.equals(author)) {
+                return temp;
+            }
+        }
+        return new Reply(content, stars, author);
     }
 
 }
