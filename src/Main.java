@@ -6,7 +6,10 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
-
+/* TODO
+    1. 在utility中完成cleardata的静态方法
+    2. 把时间戳预处理成Timestamp
+* */
 public class Main {
     public static ArrayList<Author> authors = new ArrayList<>();
     public static ArrayList<Category> categories = new ArrayList<>();
@@ -29,7 +32,9 @@ public class Main {
 //        for (Author author : authors) {
 //            System.out.println(author.id + ";" + author.registerTime + ";" + author.phoneNumber + ";" + author.name);
 //        }
-        dataInput.LOAD();
+//        dataInputPre1.LOAD();
+        dataInputTrans2.LOAD();
+//        dataInputBatch3.LOAD();
     }
 
     static Author createAuthor(String name) {
