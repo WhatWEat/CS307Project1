@@ -8,14 +8,14 @@ import java.io.FileReader;
 import java.util.*;
 
 public class Main {
-    static ArrayList<Author> authors = new ArrayList<>();
-    static ArrayList<Category> categories = new ArrayList<>();
-    static ArrayList<Post> posts = new ArrayList<>();
-    static ArrayList<City> cities = new ArrayList<>();
+    public static ArrayList<Author> authors = new ArrayList<>();
+    public static ArrayList<Category> categories = new ArrayList<>();
+    public static ArrayList<Post> posts = new ArrayList<>();
+    public static ArrayList<City> cities = new ArrayList<>();
 
-    static ArrayList<Reply> replies = new ArrayList<>();
+    public static ArrayList<Reply> replies = new ArrayList<>();
 
-    static ArrayList<SubReply> subReplies = new ArrayList<>();
+    public static ArrayList<SubReply> subReplies = new ArrayList<>();
 
     public static void main(String[] args) {
         loadPost();
@@ -29,6 +29,7 @@ public class Main {
 //        for (Author author : authors) {
 //            System.out.println(author.id + ";" + author.registerTime + ";" + author.phoneNumber + ";" + author.name);
 //        }
+        dataInput.LOAD();
     }
 
     static Author createAuthor(String name) {
@@ -85,13 +86,7 @@ public class Main {
                 String part1 = data.substring(0, lastPeriodIndex); // 截取分割后的第一部分
                 String part2 = data.substring(lastPeriodIndex + 2).trim(); // 截取分割后的第二部分
 //                String[] values = data.split(", ");
-                City city = new City(part1, part2);
-                if (cities.contains(city)) {
-                    City.id--;
-                } else {
-                    cities.add(city);
-                }
-                post.city = city;
+                post.city = findCity(part1,part2);
 
                 //author
                 Author author = new Author();
@@ -143,7 +138,8 @@ public class Main {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 JSONArray authorLike = jsonObject.getJSONArray("Authors Who Liked the Post");
                 for (int j = 0; j < authorLike.length(); j++) {
-                    posts.get(i).like.add(findAuthor(authors, authorLike.getString(j)));
+                    Author author = findAuthor(authors, authorLike.getString(j));
+                    posts.get(i).like.add(author);
                 }
             }
             //shared
@@ -186,7 +182,9 @@ public class Main {
                 //reply&post
                 Post post = findPost(posts, post_id);
                 if (post != null) {
-                    post.replies.add(reply);
+                    if (!post.replies.contains(reply)){
+                        post.replies.add(reply);
+                    }
                 }
                 //subReply  subReply&Author  subReply&Reply
                 Author authorOfSubReply = findAuthor(authors, subReplyAuthor);
@@ -209,5 +207,17 @@ public class Main {
         }
         return new Reply(content, stars, author);
     }
+
+    static City findCity(String city, String country) {
+        for (City temp : cities) {
+            if (temp.city.equals(city) && temp.country.equals(country)){
+                return temp;
+            }
+        }
+        City city1 = new City(city,country);
+        cities.add(city1);
+        return city1;
+    }
+
 
 }
