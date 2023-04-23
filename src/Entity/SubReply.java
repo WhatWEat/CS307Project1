@@ -2,14 +2,14 @@ package Entity;
 
 public class SubReply {
     public static long id;
-    public long SubReply_ID;
+    public long subReply_ID;
     public String content;
-    public long star;
+    public long stars;
     public Author author;
-    public SubReply( String content, long star, Author author) {
-        SubReply_ID = ++id;
+    public SubReply( String content, long stars, Author author) {
+        subReply_ID = ++id;
         this.content = content;
-        this.star = star;
+        this.stars = stars;
         this.author = author;
     }
 }
