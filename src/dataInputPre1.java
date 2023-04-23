@@ -1,23 +1,31 @@
-import Entity.*;
-
-import java.io.*;
-import java.util.Properties;
-import java.sql.*;
-
+import Entity.Author;
+import Entity.Category;
+import Entity.City;
+import Entity.Post;
+import Entity.Reply;
+import Entity.SubReply;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Properties;;
 /*
 0.这个程序现在已经可以运行
 1.File -> Project Structure -> Project Settings -> Libraries。
-    点击 + 按钮 -> Java
+    点击 + 按钮 -> Javza
     导入postgresql-45.6.0.jar
 3.30行url更改主机和数据库名
 5.loadDBUser()方法中更改dbUser.properties的信息
 6.loadTXTFile()方法中修改txt文件的地址
  */
-public class dataInput {
+public class dataInputPre1 {
 
     private static Connection con = null;
     private static PreparedStatement stmt = null;
-
     public static void LOAD() {
         Properties prop = loadDBUser();
         openDB(prop);
@@ -41,6 +49,8 @@ public class dataInput {
 
         closeDB();
         System.out.println("Finish!");
+        System.out.println("Total time:" + Utility.getTotalTime() + "ms");
+        System.out.println("Average speed: " + Utility.getAverageTime() + "records/s");
     }
 
     private static void openDB(Properties prop) {
@@ -50,7 +60,7 @@ public class dataInput {
             System.err.println("Cannot find the Postgres driver. Check CLASSPATH.");
             System.exit(1);
         }
-        String url = "jdbc:postgresql://localhost/project1";
+        String url = "jdbc:postgresql://localhost:5432/Lab9";
         try {
             con = DriverManager.getConnection(url, prop);
 
@@ -82,7 +92,7 @@ public class dataInput {
     private static Properties loadDBUser() {
         Properties properties = new Properties();
         try {
-            properties.load(new InputStreamReader(new FileInputStream("dbUser.properties")));
+            properties.load(new InputStreamReader(new FileInputStream("./src/dbUser.properties")));
             return properties;
         } catch (IOException e) {
             System.err.println("can not find db user file");
@@ -117,8 +127,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " Author records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,count,"Author");
     }
 
     public static void loadPost() {
@@ -149,8 +158,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " Post records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,count,"Post");
     }
 
     public static void loadAuthorWritePost() {
@@ -178,8 +186,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " AuthorWritePost records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,count,"AuthorWritePost");
     }
 
     public static void loadAuthorLikePost() {
@@ -210,8 +217,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(counter + " AuthorLikePost records successfully loaded");
-        System.out.println("Loading speed : " + (counter * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,counter,"AuthorLikePost");
     }
 
     public static void loadAuthorSharePost() {
@@ -242,8 +248,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(counter + " AuthorSharePost records successfully loaded");
-        System.out.println("Loading speed : " + (counter * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,counter,"AuthorSharePost");
     }
 
     public static void loadAuthorFavoritePost() {
@@ -274,8 +279,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(counter + " AuthorFavoritePost records successfully loaded");
-        System.out.println("Loading speed : " + (counter * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,counter,"AuthorFavoritePost");
     }
 
     public static void loadAuthorFollowPost() {
@@ -306,8 +310,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(counter + " AuthorFollowPost records successfully loaded");
-        System.out.println("Loading speed : " + (counter * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,counter,"AuthorFollowPost");
     }
 
     public static void loadAuthorReply() {
@@ -334,8 +337,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " AuthorReply records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,count,"AuthorReply");
     }
 
     public static void loadCategory() {
@@ -362,8 +364,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " Category records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,count,"Category");
     }
 
     public static void loadPostCategory() {
@@ -394,8 +395,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(counter + " PostCategory records successfully loaded");
-        System.out.println("Loading speed : " + (counter * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,counter,"PostCategory");
     }
 
     public static void loadPostCity() {
@@ -422,8 +422,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " PostCity PostCategory records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start, count,"PostCity");
     }
 
     public static void loadPostingCity() {
@@ -451,8 +450,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " PostingCity PostCity PostCategory records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,count,"PostingCity");
     }
 
     public static void loadPostReply() {
@@ -483,8 +481,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(counter + " PostReply PostCategory records successfully loaded");
-        System.out.println("Loading speed : " + (counter * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,counter,"PostReply");
     }
 
     public static void loadReply() {
@@ -512,8 +509,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " Reply records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start, count,"Reply");
     }
 
     public static void loadSubReply() {
@@ -546,8 +542,7 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(counter + " SubReply records successfully loaded");
-        System.out.println("Loading speed : " + (counter * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end-start,counter,"SubReply");
     }
 
     public static void loadSubReplyAuthor() {
@@ -574,8 +569,6 @@ public class dataInput {
             count++;
         }
         long end = System.currentTimeMillis();
-        System.out.println(count + " SubReplyAuthor records successfully loaded");
-        System.out.println("Loading speed : " + (count * 1000L) / (end - start) + " records/s");
+        Utility.addCount(end - start, count, " SubReplyAuthor");
     }
-
 }
