@@ -22,7 +22,6 @@ public class Author {
         this.registerTime = generateRandomDateTime();
     }
 
-
     public Author(String id, String registerTime, String phoneNumber,String name) {
         this.id = id;
         this.registerTime = registerTime;

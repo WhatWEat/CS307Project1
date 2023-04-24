@@ -9,6 +9,7 @@ import java.util.*;
 /* TODO
     1. 在utility中完成cleardata的静态方法
     2. 把时间戳预处理成Timestamp
+    3. 随机生成数据Author
 * */
 public class Main {
     public static ArrayList<Author> authors = new ArrayList<>();

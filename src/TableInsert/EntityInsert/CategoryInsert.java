@@ -1,6 +1,7 @@
-package TableInsert;
+package TableInsert.EntityInsert;
 
 import Entity.Category;
+import TableInsert.BasicInfor;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

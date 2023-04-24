@@ -3,20 +3,24 @@ import Entity.Category;
 import Entity.City;
 import Entity.Post;
 import Entity.Reply;
-import TableInsert.AuthorInsert;
+import TableInsert.RelationInsert.AuthorFavoritePostInsert;
+import TableInsert.EntityInsert.AuthorInsert;
+import TableInsert.RelationInsert.AuthorFollowPostInsert;
+import TableInsert.RelationInsert.AuthorLikePostInsert;
+import TableInsert.RelationInsert.AuthorReplyInsert;
+import TableInsert.RelationInsert.AuthorSharePostInsert;
+import TableInsert.RelationInsert.AuthorWritePostInsert;
 import TableInsert.BasicInfor;
-import TableInsert.CategoryInsert;
-import TableInsert.CityInsert;
-import TableInsert.PostInsert;
-import TableInsert.ReplyInsert;
+import TableInsert.EntityInsert.CategoryInsert;
+import TableInsert.EntityInsert.CityInsert;
+import TableInsert.EntityInsert.PostInsert;
+import TableInsert.EntityInsert.ReplyInsert;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
@@ -40,7 +44,7 @@ public class dataInputPara4 {
         Properties prop = loadDBUser();
         openDB(prop);
         BasicInfor.con = con;
-        //entity
+        /*entity*/
         loadData(Main.authors, "Author",
             "INSERT INTO public.Author (author_id,registration_time,phone_number,name) " +
                 "VALUES (?,?,?,?);");
@@ -54,6 +58,29 @@ public class dataInputPara4 {
             "VALUES (?,?,?);");
         loadData(Main.replies, "Reply", "INSERT INTO public.Reply (reply_id,content,stars) " +
             "VALUES (?,?,?);");
+
+        /*Post Relation*/
+        loadData(Main.posts,"AuthorWritePost",
+            "INSERT INTO public.AuthorWritePost (post_id,author_id) " + "VALUES (?,?);");
+
+        loadData(Main.posts,"AuthorLikePost",
+            "INSERT INTO public.AuthorLikePost (post_id,author_id) " + "VALUES (?,?);");
+
+        loadData(Main.posts,"AuthorSharePost",
+            "INSERT INTO public.AuthorSharePost (post_id,author_id) " + "VALUES (?,?);");
+
+        loadData(Main.posts,"AuthorFavoritePost",
+            "INSERT INTO public.AuthorFavoritePost (post_id,author_id) " + "VALUES (?,?);");
+
+        loadData(Main.posts,"AuthorFavoritePost",
+            "INSERT INTO public.AuthorFavoritePost (post_id,author_id) " + "VALUES (?,?);");
+
+        loadData(Main.posts,"AuthorFollowPost",
+            "INSERT INTO public.AuthorFollowPost (post_id,author_id) " + "VALUES (?,?);");
+
+        /*Author Relation*/
+        loadData(Main.replies,"AuthorReply",
+            "INSERT INTO public.AuthorReply (author_id,reply_id) " + "VALUES (?,?);");
         closeDB();
         System.out.println("Finish!");
         System.out.println("Total time:" + Utility.getTotalTime() + "ms");
@@ -85,6 +112,42 @@ public class dataInputPara4 {
                 case "Reply" -> {
                     count += block.size();
                     executor.submit(new ReplyInsert(sql, (ArrayList<Reply>) block));
+                }
+                case "AuthorWritePost" -> {
+                    count += block.size();
+                    executor.submit(new AuthorWritePostInsert(sql, (ArrayList<Post>) block));
+                }
+                case "AuthorLikePost" -> {
+                    ArrayList<Post> posts = (ArrayList<Post>) block;
+                    for(Post i: posts){
+                        count += i.like.size();
+                    }
+                    executor.submit(new AuthorLikePostInsert(sql, posts));
+                }
+                case "AuthorSharePost" -> {
+                    ArrayList<Post> posts = (ArrayList<Post>) block;
+                    for(Post i: posts){
+                        count += i.share.size();
+                    }
+                    executor.submit(new AuthorSharePostInsert(sql, posts));
+                }
+                case "AuthorFavoritePost" -> {
+                    ArrayList<Post> posts = (ArrayList<Post>) block;
+                    for(Post i: posts){
+                        count += i.favorite.size();
+                    }
+                    executor.submit(new AuthorFavoritePostInsert(sql, posts));
+                }
+                case "AuthorFollowPost" -> {
+                    ArrayList<Post> posts = (ArrayList<Post>) block;
+                    for(Post i: posts){
+                        count += i.follow.size();
+                    }
+                    executor.submit(new AuthorFollowPostInsert(sql, posts));
+                }
+                case "AuthorReply" -> {
+                    count += block.size();
+                    executor.submit(new AuthorReplyInsert(sql, (ArrayList<Reply>) block));
                 }
             }
         }
