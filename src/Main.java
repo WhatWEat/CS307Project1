@@ -33,8 +33,9 @@ public class Main {
 //            System.out.println(author.id + ";" + author.registerTime + ";" + author.phoneNumber + ";" + author.name);
 //        }
 //        dataInputPre1.LOAD();
-        dataInputTrans2.LOAD();
+//        dataInputTrans2.LOAD();
 //        dataInputBatch3.LOAD();
+        dataInputPara4.LOAD();
     }
 
     static Author createAuthor(String name) {

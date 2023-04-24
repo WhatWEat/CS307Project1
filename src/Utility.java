@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Utility {
     public static long tableNumber = 0;
     public static double averageTime = 0;
