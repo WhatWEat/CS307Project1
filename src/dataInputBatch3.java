@@ -170,7 +170,6 @@ public class dataInputBatch3 {
                     stmt.executeBatch();
                     stmt.clearBatch();
                 }
-
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }

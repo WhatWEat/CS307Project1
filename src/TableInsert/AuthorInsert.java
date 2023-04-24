@@ -29,13 +29,9 @@ public class AuthorInsert extends BasicInfor implements Runnable{
                     sql.clearBatch();
                 }
             }
-            if(authors.size() % BATCH_SIZE != 0){
-                sql.executeBatch();
-                sql.clearBatch();
-            }
-            con.commit();
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+        finalCommit(authors.size());
     }
 }
