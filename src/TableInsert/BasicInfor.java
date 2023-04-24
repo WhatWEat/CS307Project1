@@ -32,7 +32,17 @@ public class BasicInfor {
             System.exit(1);
         }
     }
-
+    void finalCommit(long count){
+        try {
+            if (count % BATCH_SIZE != 0) {
+                sql.executeBatch();
+            }
+            con.commit();
+            sql.close();
+        } catch (SQLException s) {
+            System.out.println("post final commit error");
+        }
+    }
     static void closeDB(){
         try{
             if(con != null) con.close();
