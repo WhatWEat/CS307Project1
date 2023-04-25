@@ -39,6 +39,7 @@ public class Main {
 //        dataInputBatch3.LOAD();
         Utility.clearDataBase("jdbc:postgresql://localhost:5432/project1", "","");
         dataInputPara4.LOAD();
+
     }
 
     static Author createAuthor(String name) {

@@ -37,6 +37,7 @@ public class dataInputDoublePara5 {
         executor.submit(new AuthorTable(Main.authors,
             "INSERT INTO public.Author (author_id,registration_time,phone_number,name) "
                 + "VALUES (?,?,?,?);"));
+
         try {
             Thread.sleep(500);
             System.out.println("ALL Task Submit");
