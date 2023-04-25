@@ -1,3 +1,5 @@
+import Entity.Post;
+import TableInsert.BasicInfor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +10,21 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import paraTableInsert.EntityTable.AuthorFavPostTable;
+import paraTableInsert.EntityTable.AuthorFollowPostTable;
+import paraTableInsert.EntityTable.AuthorLikePostTable;
+import paraTableInsert.EntityTable.AuthorReplyTable;
+import paraTableInsert.EntityTable.AuthorSharePostTable;
+import paraTableInsert.EntityTable.AuthorWritePostTable;
+import paraTableInsert.EntityTable.CategoryTable;
+import paraTableInsert.EntityTable.CityTable;
+import paraTableInsert.EntityTable.PostCategoryTable;
+import paraTableInsert.EntityTable.PostCityTable;
+import paraTableInsert.EntityTable.PostReplyTable;
+import paraTableInsert.EntityTable.PostTable;
+import paraTableInsert.EntityTable.ReplyTable;
+import paraTableInsert.EntityTable.SubReplyAuthorTable;
+import paraTableInsert.EntityTable.SubReplyTable;
 import paraTableInsert.ParallelInfo;
 import paraTableInsert.EntityTable.AuthorTable;
 
@@ -34,9 +51,24 @@ public class dataInputDoublePara5 {
 
     private static void allocateThread() {
         ExecutorService executor = Executors.newFixedThreadPool(ParallelInfo.parallel);
-        executor.submit(new AuthorTable(Main.authors,
-            "INSERT INTO public.Author (author_id,registration_time,phone_number,name) "
-                + "VALUES (?,?,?,?);"));
+        // Entity
+        executor.submit(new AuthorTable(Main.authors, BasicInfor.loadAuthor));
+        executor.submit(new PostTable(Main.posts, BasicInfor.loadPost));
+        executor.submit(new CategoryTable(Main.categories,BasicInfor.loadCategory));
+        executor.submit(new CityTable(Main.cities, BasicInfor.loadCity));
+        executor.submit(new ReplyTable(Main.replies, BasicInfor.loadReply));
+        //Relation
+        executor.submit(new AuthorWritePostTable(Main.posts,BasicInfor.loadAuthorWritePost));
+        executor.submit(new AuthorLikePostTable(Main.posts,BasicInfor.loadAuthorLikePost));
+        executor.submit(new AuthorSharePostTable(Main.posts,BasicInfor.loadAuthorSharePost));
+        executor.submit(new AuthorFavPostTable(Main.posts,BasicInfor.loadAuthorFavoritePost));
+        executor.submit(new AuthorFollowPostTable(Main.posts,BasicInfor.loadAuthorFollowPost));
+        executor.submit(new PostCategoryTable(Main.posts,BasicInfor.loadPostCategory));
+        executor.submit(new PostCityTable(Main.posts,BasicInfor.loadPostCity));
+        executor.submit(new PostReplyTable(Main.posts,BasicInfor.loadPostReply));
+        executor.submit(new AuthorReplyTable(Main.replies,BasicInfor.loadAuthorReply));
+        executor.submit(new SubReplyTable(Main.replies,BasicInfor.loadSubReply));
+        executor.submit(new SubReplyAuthorTable(Main.subReplies,BasicInfor.loadSubReplyAuthor));
         try {
             Thread.sleep(500);
             System.out.println("ALL Task Submit");
@@ -49,7 +81,6 @@ public class dataInputDoublePara5 {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private static void openDB(Properties prop) {
