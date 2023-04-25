@@ -34,11 +34,12 @@ public class PostCityInsert extends BasicInfor implements Runnable {
                     throw new RuntimeException(ex);
                 }
             }
+            finalCommit(posts.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             doneSignal.countDown();
         }
-        finalCommit(posts.size());
+
     }
 }

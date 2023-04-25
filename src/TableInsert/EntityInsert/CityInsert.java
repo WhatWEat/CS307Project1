@@ -32,11 +32,11 @@ public class CityInsert extends BasicInfor implements Runnable{
                     throw new RuntimeException(ex);
                 }
             }
+            finalCommit(cities.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             doneSignal.countDown();
         }
-        finalCommit(cities.size());
     }
 }

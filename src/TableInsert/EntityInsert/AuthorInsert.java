@@ -32,6 +32,7 @@ public class AuthorInsert extends BasicInfor implements Runnable{
                     sql.clearBatch();
                 }
             }
+            finalCommit(authors.size());
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } catch (InterruptedException e) {
@@ -39,6 +40,5 @@ public class AuthorInsert extends BasicInfor implements Runnable{
         } finally {
             doneSignal.countDown();
         }
-        finalCommit(authors.size());
     }
 }

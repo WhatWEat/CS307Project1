@@ -80,9 +80,6 @@ public class dataInputPara4 {
         loadData(Main.posts, "AuthorFavoritePost",
             "INSERT INTO public.AuthorFavoritePost (post_id,author_id) " + "VALUES (?,?);");
 
-        loadData(Main.posts, "AuthorFavoritePost",
-            "INSERT INTO public.AuthorFavoritePost (post_id,author_id) " + "VALUES (?,?);");
-
         loadData(Main.posts, "AuthorFollowPost",
             "INSERT INTO public.AuthorFollowPost (post_id,author_id) " + "VALUES (?,?);");
 

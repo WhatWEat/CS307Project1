@@ -35,11 +35,12 @@ public class ReplyInsert extends BasicInfor implements Runnable {
                     throw new RuntimeException(ex);
                 }
             }
+            finalCommit(replies.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             doneSignal.countDown();
         }
-        finalCommit(replies.size());
+
     }
 }
