@@ -69,6 +69,7 @@ public class dataInputDoublePara5 {
         executor.submit(new AuthorReplyTable(Main.replies,BasicInfor.loadAuthorReply));
         executor.submit(new SubReplyTable(Main.replies,BasicInfor.loadSubReply));
         executor.submit(new SubReplyAuthorTable(Main.subReplies,BasicInfor.loadSubReplyAuthor));
+
         try {
             Thread.sleep(500);
             System.out.println("ALL Task Submit");
