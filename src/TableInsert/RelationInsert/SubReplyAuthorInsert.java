@@ -25,7 +25,7 @@ public class SubReplyAuthorInsert extends BasicInfor implements Runnable {
                 try {
                     sql.setString(1, subReply.author.id);
                     sql.setLong(2, subReply.subReply_ID);
-                    sql.executeUpdate();
+                    sql.addBatch();
                     if (i % BATCH_SIZE == 0) {
                         sql.executeBatch();
                         sql.clearBatch();

@@ -28,7 +28,7 @@ public class SubReplyInsert extends BasicInfor implements Runnable {
                         sql.setLong(2, reply.subReplies.get(i).subReply_ID);
                         sql.setString(3, reply.subReplies.get(i).content);
                         sql.setLong(4, reply.subReplies.get(i).stars);
-                        sql.executeUpdate();
+                        sql.addBatch();
                         if (counter % BATCH_SIZE == 0) {
                             sql.executeBatch();
                             sql.clearBatch();

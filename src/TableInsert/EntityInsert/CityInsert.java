@@ -23,7 +23,7 @@ public class CityInsert extends BasicInfor implements Runnable{
                     sql.setLong(1, city.City_ID);
                     sql.setString(2, city.city);
                     sql.setString(3, city.country);
-                    sql.executeUpdate();
+                    sql.addBatch();
                     if (i % BATCH_SIZE == 0) {
                         sql.executeBatch();
                         sql.clearBatch();

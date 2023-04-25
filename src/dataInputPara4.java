@@ -45,7 +45,7 @@ public class dataInputPara4 {
     Total time:1204ms
     Average speed: 7605.481727574751records/s
     * */
-    private static final int BLOCK_SIZE = 5000;
+    private static final int BLOCK_COUNT = 2;
     private static Connection con = null;
 
     public static void LOAD() {
@@ -109,7 +109,13 @@ public class dataInputPara4 {
     }
 
     public static <T> void loadData(ArrayList<T> toInsert, String tableName, String sql) {
-        ArrayList<ArrayList<T>> blocks = BasicInfor.splitRecords(toInsert, BLOCK_SIZE);
+        int size = 0;
+        if (toInsert.size() % BLOCK_COUNT == 0) {
+            size = toInsert.size() / BLOCK_COUNT;
+        } else {
+            size = toInsert.size() / BLOCK_COUNT + 1;
+        }
+        ArrayList<ArrayList<T>> blocks = BasicInfor.splitRecords(toInsert, size);
         CountDownLatch startSignal = new CountDownLatch(1);
         CountDownLatch doneSignal = new CountDownLatch(blocks.size());
         ExecutorService executor = Executors.newFixedThreadPool(blocks.size());
@@ -236,7 +242,7 @@ public class dataInputPara4 {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(tableName + "时间"+(end-start));
+        System.out.println(tableName + "时间" + (end - start));
         Utility.addCount(end - start, count, tableName);
     }
 

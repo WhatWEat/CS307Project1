@@ -26,7 +26,7 @@ public class AuthorSharePostInsert extends BasicInfor implements Runnable {
                     for (int j = 0; j < post.share.size(); j++) {
                         sql.setLong(1, post.post_id);
                         sql.setString(2, post.share.get(j).id);
-                        sql.executeUpdate();
+                        sql.addBatch();
                         if (counter % BATCH_SIZE == 0) {
                             sql.executeBatch();
                             sql.clearBatch();

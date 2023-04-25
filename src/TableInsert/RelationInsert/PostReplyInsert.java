@@ -26,7 +26,7 @@ public class PostReplyInsert extends BasicInfor implements Runnable {
                     for (int i = 0; i < post.replies.size(); i++) {
                         sql.setLong(1, post.post_id);
                         sql.setLong(2, post.replies.get(i).reply_Id);
-                        sql.executeUpdate();
+                        sql.addBatch();
                         if (counter % BATCH_SIZE == 0) {
                             sql.executeBatch();
                             sql.clearBatch();
