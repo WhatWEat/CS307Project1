@@ -25,7 +25,7 @@ public class CategoryInsert extends BasicInfor implements Runnable {
                 try {
                     sql.setLong(1, category.Category_ID);
                     sql.setString(2, category.category);
-                    sql.executeUpdate();
+                    sql.addBatch();
                     if (i % BATCH_SIZE == 0) {
                         sql.executeBatch();
                         sql.clearBatch();

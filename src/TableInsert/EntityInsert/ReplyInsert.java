@@ -26,7 +26,7 @@ public class ReplyInsert extends BasicInfor implements Runnable {
                     sql.setLong(1, reply.reply_Id);
                     sql.setString(2, reply.content);
                     sql.setLong(3, reply.stars);
-                    sql.executeUpdate();
+                    sql.addBatch();
                     if (i % BATCH_SIZE == 0) {
                         sql.executeBatch();
                         sql.clearBatch();

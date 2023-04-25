@@ -26,7 +26,7 @@ public class AuthorFavoritePostInsert extends BasicInfor implements Runnable {
                     for (int j = 0; j < post.favorite.size(); j++) {
                         sql.setLong(1, post.post_id);
                         sql.setString(2, post.favorite.get(j).id);
-                        sql.executeUpdate();
+                        sql.addBatch();
                         if (counter % BATCH_SIZE == 0) {
                             sql.executeBatch();
                             sql.clearBatch();

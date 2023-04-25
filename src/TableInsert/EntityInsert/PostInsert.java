@@ -28,7 +28,7 @@ public class PostInsert extends BasicInfor implements Runnable {
                     sql.setString(2, post.title);
                     sql.setString(3, post.content);
                     sql.setTimestamp(4, timestamp);
-                    sql.executeUpdate();
+                    sql.addBatch();
                     if (i % BATCH_SIZE == 0) {
                         sql.executeBatch();
                         sql.clearBatch();
