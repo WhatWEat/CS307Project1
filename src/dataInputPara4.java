@@ -45,7 +45,7 @@ public class dataInputPara4 {
     Total time:1204ms
     Average speed: 7605.481727574751records/s
     * */
-    private static final int BLOCK_COUNT = 2;
+    private static final int BLOCK_COUNT = 4;
     private static Connection con = null;
 
     public static void LOAD() {

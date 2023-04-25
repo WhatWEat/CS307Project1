@@ -37,8 +37,9 @@ public class Main {
 //        dataInputPre1.LOAD();
 //        dataInputTrans2.LOAD();
 //        dataInputBatch3.LOAD();
-        Utility.clearDataBase("jdbc:postgresql://localhost:5432/project1", "","");
+//        Utility.clearDataBase("jdbc:postgresql://localhost:5432/project1", "","");
         dataInputPara4.LOAD();
+//        dataInputDoublePara5.LOAD();
     }
 
     static Author createAuthor(String name) {

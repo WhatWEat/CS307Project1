@@ -46,29 +46,29 @@ public class dataInputDoublePara5 {
         closeDB();
         System.out.println("Finish!");
         System.out.println("Total time:" + Utility.getTotalTime() + "ms");
-        System.out.println("Average speed: " + Utility.getAverageTime() + "records/s");
+//        System.out.println("Average speed: " + Utility.getAverageTime() + "records/s");
     }
 
     private static void allocateThread() {
         ExecutorService executor = Executors.newFixedThreadPool(ParallelInfo.parallel);
         // Entity
         executor.submit(new AuthorTable(Main.authors, BasicInfor.loadAuthor));
-        executor.submit(new PostTable(Main.posts, BasicInfor.loadPost));
-        executor.submit(new CategoryTable(Main.categories,BasicInfor.loadCategory));
-        executor.submit(new CityTable(Main.cities, BasicInfor.loadCity));
-        executor.submit(new ReplyTable(Main.replies, BasicInfor.loadReply));
-        //Relation
-        executor.submit(new AuthorWritePostTable(Main.posts,BasicInfor.loadAuthorWritePost));
-        executor.submit(new AuthorLikePostTable(Main.posts,BasicInfor.loadAuthorLikePost));
-        executor.submit(new AuthorSharePostTable(Main.posts,BasicInfor.loadAuthorSharePost));
-        executor.submit(new AuthorFavPostTable(Main.posts,BasicInfor.loadAuthorFavoritePost));
-        executor.submit(new AuthorFollowPostTable(Main.posts,BasicInfor.loadAuthorFollowPost));
-        executor.submit(new PostCategoryTable(Main.posts,BasicInfor.loadPostCategory));
-        executor.submit(new PostCityTable(Main.posts,BasicInfor.loadPostCity));
-        executor.submit(new PostReplyTable(Main.posts,BasicInfor.loadPostReply));
-        executor.submit(new AuthorReplyTable(Main.replies,BasicInfor.loadAuthorReply));
-        executor.submit(new SubReplyTable(Main.replies,BasicInfor.loadSubReply));
-        executor.submit(new SubReplyAuthorTable(Main.subReplies,BasicInfor.loadSubReplyAuthor));
+//        executor.submit(new PostTable(Main.posts, BasicInfor.loadPost));
+//        executor.submit(new CategoryTable(Main.categories,BasicInfor.loadCategory));
+//        executor.submit(new CityTable(Main.cities, BasicInfor.loadCity));
+//        executor.submit(new ReplyTable(Main.replies, BasicInfor.loadReply));
+//        //Relation
+//        executor.submit(new AuthorWritePostTable(Main.posts,BasicInfor.loadAuthorWritePost));
+//        executor.submit(new AuthorLikePostTable(Main.posts,BasicInfor.loadAuthorLikePost));
+//        executor.submit(new AuthorSharePostTable(Main.posts,BasicInfor.loadAuthorSharePost));
+//        executor.submit(new AuthorFavPostTable(Main.posts,BasicInfor.loadAuthorFavoritePost));
+//        executor.submit(new AuthorFollowPostTable(Main.posts,BasicInfor.loadAuthorFollowPost));
+//        executor.submit(new PostCategoryTable(Main.posts,BasicInfor.loadPostCategory));
+//        executor.submit(new PostCityTable(Main.posts,BasicInfor.loadPostCity));
+//        executor.submit(new PostReplyTable(Main.posts,BasicInfor.loadPostReply));
+//        executor.submit(new AuthorReplyTable(Main.replies,BasicInfor.loadAuthorReply));
+//        executor.submit(new SubReplyTable(Main.replies,BasicInfor.loadSubReply));
+//        executor.submit(new SubReplyAuthorTable(Main.subReplies,BasicInfor.loadSubReplyAuthor));
         try {
             Thread.sleep(500);
             System.out.println("ALL Task Submit");
@@ -76,8 +76,9 @@ public class dataInputDoublePara5 {
             startSignal.countDown();
 
             doneSignal.await();
-            long end = System.currentTimeMillis();
             executor.shutdown();
+            long end = System.currentTimeMillis();
+            System.out.println("总用时"+(end-start));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
