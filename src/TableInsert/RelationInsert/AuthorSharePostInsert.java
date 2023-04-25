@@ -4,18 +4,23 @@ import Entity.Post;
 import TableInsert.BasicInfor;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
-public class AuthorSharePostInsert extends BasicInfor implements Runnable{
-        ArrayList<Post> posts;
+public class AuthorSharePostInsert extends BasicInfor implements Runnable {
 
-        public AuthorSharePostInsert(String sql, ArrayList<Post> posts) {
-            super(sql);
-            this.posts = posts;
-        }
+    ArrayList<Post> posts;
 
-        @Override
-        public void run() {
-            long counter = 0;
+    public AuthorSharePostInsert(String sql, ArrayList<Post> posts, CountDownLatch startSignal,
+        CountDownLatch doneSignal) {
+        super(sql, startSignal, doneSignal);
+        this.posts = posts;
+    }
+
+    @Override
+    public void run() {
+        long counter = 0;
+        try {
+            startSignal.await();
             for (Post post : posts) {
                 try {
                     for (int j = 0; j < post.share.size(); j++) {
@@ -32,6 +37,11 @@ public class AuthorSharePostInsert extends BasicInfor implements Runnable{
                     throw new RuntimeException(ex);
                 }
             }
-            finalCommit(counter);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            doneSignal.countDown();
         }
+        finalCommit(counter);
+    }
 }

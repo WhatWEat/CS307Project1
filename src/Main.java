@@ -35,8 +35,8 @@ public class Main {
 //        }
 //        dataInputPre1.LOAD();
 //        dataInputTrans2.LOAD();
-//        dataInputBatch3.LOAD();
-        dataInputPara4.LOAD();
+        dataInputBatch3.LOAD();
+//        dataInputPara4.LOAD();
     }
 
     static Author createAuthor(String name) {

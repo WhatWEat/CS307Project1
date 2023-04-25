@@ -26,9 +26,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -96,13 +98,13 @@ public class dataInputPara4 {
         /*Author Relation*/
         loadData(Main.replies, "AuthorReply",
             "INSERT INTO public.AuthorReply (author_id,reply_id) " + "VALUES (?,?);");
-         /* SubReply*/
+        /* SubReply*/
         loadData(Main.replies, "SubReply",
             "INSERT INTO public.SubReply (reply_id,sub_reply_id,content,stars) " +
                 "VALUES (?,?,?,?);");
         loadData(Main.subReplies, "SubReplyAuthor",
             "INSERT INTO public.SubReplyAuthor (author_id,sub_reply_id) " +
-            "VALUES (?,?);");
+                "VALUES (?,?);");
         closeDB();
         System.out.println("Finish!");
         System.out.println("Total time:" + Utility.getTotalTime() + "ms");
@@ -111,106 +113,133 @@ public class dataInputPara4 {
 
     public static <T> void loadData(ArrayList<T> toInsert, String tableName, String sql) {
         ArrayList<ArrayList<T>> blocks = BasicInfor.splitRecords(toInsert, BLOCK_SIZE);
+        CountDownLatch startSignal = new CountDownLatch(1);
+        CountDownLatch doneSignal = new CountDownLatch(blocks.size());
         ExecutorService executor = Executors.newFixedThreadPool(blocks.size());
         long count = 0;
         for (ArrayList<T> block : blocks) {
             switch (tableName) {
                 case "Author" -> {
                     count += block.size();
-                    executor.submit(new AuthorInsert(sql, (ArrayList<Author>) block));
+                    executor.submit(
+                        new AuthorInsert(sql, (ArrayList<Author>) block, startSignal, doneSignal));
                 }
                 case "Post" -> {
                     count += block.size();
-                    executor.submit(new PostInsert(sql, (ArrayList<Post>) block));
+                    executor.submit(
+                        new PostInsert(sql, (ArrayList<Post>) block, startSignal, doneSignal));
                 }
                 case "Category" -> {
                     count += block.size();
-                    executor.submit(new CategoryInsert(sql, (ArrayList<Category>) block));
+                    executor.submit(
+                        new CategoryInsert(sql, (ArrayList<Category>) block, startSignal,
+                            doneSignal));
                 }
                 case "City" -> {
                     count += block.size();
-                    executor.submit(new CityInsert(sql, (ArrayList<City>) block));
+                    executor.submit(
+                        new CityInsert(sql, (ArrayList<City>) block, startSignal, doneSignal));
                 }
                 case "Reply" -> {
                     count += block.size();
-                    executor.submit(new ReplyInsert(sql, (ArrayList<Reply>) block));
+                    executor.submit(
+                        new ReplyInsert(sql, (ArrayList<Reply>) block, startSignal, doneSignal));
                 }
                 case "AuthorWritePost" -> {
                     count += block.size();
-                    executor.submit(new AuthorWritePostInsert(sql, (ArrayList<Post>) block));
+                    executor.submit(
+                        new AuthorWritePostInsert(sql, (ArrayList<Post>) block, startSignal,
+                            doneSignal));
                 }
                 case "AuthorLikePost" -> {
                     ArrayList<Post> posts = (ArrayList<Post>) block;
                     for (Post i : posts) {
                         count += i.like.size();
                     }
-                    executor.submit(new AuthorLikePostInsert(sql, posts));
+                    executor.submit(new AuthorLikePostInsert(sql, posts, startSignal, doneSignal));
                 }
                 case "AuthorSharePost" -> {
                     ArrayList<Post> posts = (ArrayList<Post>) block;
                     for (Post i : posts) {
                         count += i.share.size();
                     }
-                    executor.submit(new AuthorSharePostInsert(sql, posts));
+                    executor.submit(new AuthorSharePostInsert(sql, posts, startSignal, doneSignal));
                 }
                 case "AuthorFavoritePost" -> {
                     ArrayList<Post> posts = (ArrayList<Post>) block;
                     for (Post i : posts) {
                         count += i.favorite.size();
                     }
-                    executor.submit(new AuthorFavoritePostInsert(sql, posts));
+                    executor.submit(
+                        new AuthorFavoritePostInsert(sql, posts, startSignal, doneSignal));
                 }
                 case "AuthorFollowPost" -> {
                     ArrayList<Post> posts = (ArrayList<Post>) block;
                     for (Post i : posts) {
                         count += i.follow.size();
                     }
-                    executor.submit(new AuthorFollowPostInsert(sql, posts));
+                    executor.submit(
+                        new AuthorFollowPostInsert(sql, posts, startSignal, doneSignal));
                 }
                 case "AuthorReply" -> {
                     count += block.size();
-                    executor.submit(new AuthorReplyInsert(sql, (ArrayList<Reply>) block));
+                    executor.submit(
+                        new AuthorReplyInsert(sql, (ArrayList<Reply>) block, startSignal,
+                            doneSignal));
                 }
                 case "PostCategory" -> {
                     ArrayList<Post> posts = (ArrayList<Post>) block;
                     for (Post i : posts) {
                         count += i.categories.size();
                     }
-                    executor.submit(new PostCategoryInsert(sql, posts));
+                    executor.submit(new PostCategoryInsert(sql, posts, startSignal, doneSignal));
                 }
                 case "PostCity" -> {
                     count += block.size();
-                    executor.submit(new PostCityInsert(sql,(ArrayList<Post>) block));
+                    executor.submit(
+                        new PostCityInsert(sql, (ArrayList<Post>) block, startSignal, doneSignal));
                 }
                 case "PostReply" -> {
                     ArrayList<Post> posts = (ArrayList<Post>) block;
                     for (Post i : posts) {
                         count += i.replies.size();
                     }
-                    executor.submit(new PostReplyInsert(sql, posts));
+                    executor.submit(new PostReplyInsert(sql, posts, startSignal, doneSignal));
                 }
                 case "SubReply" -> {
                     ArrayList<Reply> replies = (ArrayList<Reply>) block;
                     for (Reply i : replies) {
                         count += i.subReplies.size();
                     }
-                    executor.submit(new SubReplyInsert(sql, replies));
+                    executor.submit(new SubReplyInsert(sql, replies, startSignal, doneSignal));
                 }
                 case "SubReplyAuthor" -> {
                     count += block.size();
-                    executor.submit(new SubReplyAuthorInsert(sql, (ArrayList<SubReply>) block));
+                    executor.submit(
+                        new SubReplyAuthorInsert(sql, (ArrayList<SubReply>) block, startSignal,
+                            doneSignal));
                 }
             }
         }
-        long start = System.currentTimeMillis();
-        executor.shutdown();
+        long start = 0, end = 0;
         try {
+            System.out.println("All tasks submitted! Waiting for command to start...");
+            Thread.sleep(500); // 模拟等待500ms
+            //开始计时
+            start = System.currentTimeMillis();
+            startSignal.countDown();
+            PreparedStatement ps = con.prepareStatement(sql);//计算预编译SQL的时间
+            doneSignal.await();
+            //计时结束
+            end = System.currentTimeMillis();
+            executor.shutdown();
             executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
             // Handle interruption
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        long end = System.currentTimeMillis();
+        System.out.println(tableName + "时间"+(end-start));
         Utility.addCount(end - start, count, tableName);
     }
 
