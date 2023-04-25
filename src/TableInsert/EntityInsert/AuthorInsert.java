@@ -21,7 +21,6 @@ public class AuthorInsert extends BasicInfor implements Runnable{
             startSignal.await();
             for(int i = 0;i < authors.size();i++){
                 Author author = authors.get(i);
-//                Timestamp timestamp = Timestamp.valueOf(author.rgeisterTime);
                 sql.setString(1, author.id);
                 sql.setTimestamp(2, author.registerTime);
                 sql.setString(3, author.phoneNumber);
