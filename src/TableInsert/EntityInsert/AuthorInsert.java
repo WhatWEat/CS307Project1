@@ -5,18 +5,20 @@ import TableInsert.BasicInfor;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class AuthorInsert extends BasicInfor implements Runnable{
     ArrayList<Author> authors;
 
-    public AuthorInsert(String sql, ArrayList<Author> authors) {
-        super(sql);
+    public AuthorInsert(String sql, ArrayList<Author> authors, CountDownLatch startSignal, CountDownLatch doneSignal) {
+        super(sql, startSignal, doneSignal);
         this.authors = authors;
     }
 
     @Override
     public void run() {
         try{
+            startSignal.await();
             for(int i = 0;i < authors.size();i++){
                 Author author = authors.get(i);
                 Timestamp timestamp = Timestamp.valueOf(author.registerTime);
@@ -32,6 +34,10 @@ public class AuthorInsert extends BasicInfor implements Runnable{
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            doneSignal.countDown();
         }
         finalCommit(authors.size());
     }

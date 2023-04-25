@@ -6,11 +6,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 public class BasicInfor {
     public static Connection con = null;
     public PreparedStatement sql = null;
     public static final int BATCH_SIZE = 1000;
+    public CountDownLatch startSignal;
+    public CountDownLatch doneSignal;
 
     public BasicInfor(Connection con,String sql) {
         if(BasicInfor.con == null) BasicInfor.con = con;
@@ -24,9 +27,11 @@ public class BasicInfor {
         }
     }
 
-    public BasicInfor(String sql) {
+    public BasicInfor(String sql,CountDownLatch startSignal, CountDownLatch doneSignal) {
         try {
             this.sql = con.prepareStatement(sql);
+            this.doneSignal = doneSignal;
+            this.startSignal = startSignal;
         } catch (SQLException e) {
             System.err.println("create SQL sentence failed");
             System.err.println(e.getMessage());
