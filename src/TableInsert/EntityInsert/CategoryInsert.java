@@ -34,11 +34,11 @@ public class CategoryInsert extends BasicInfor implements Runnable {
                     throw new RuntimeException(ex);
                 }
             }
+            finalCommit(categories.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             doneSignal.countDown();
         }
-        finalCommit(categories.size());
     }
 }
