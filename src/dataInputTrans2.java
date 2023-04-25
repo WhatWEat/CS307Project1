@@ -108,9 +108,9 @@ public class dataInputTrans2 {
         while (count <= Main.authors.size()) {
             Author author = Main.authors.get(count - 1);
             try {
-                Timestamp timestamp = Timestamp.valueOf(author.registerTime);
+//                Timestamp timestamp = Timestamp.valueOf(author.registerTime);
                 stmt.setString(1, author.id);
-                stmt.setTimestamp(2, timestamp);
+                stmt.setTimestamp(2, author.registerTime);
                 stmt.setString(3, author.phoneNumber);
                 stmt.setString(4, author.name);
                 stmt.executeUpdate();
@@ -148,11 +148,11 @@ public class dataInputTrans2 {
         while (count <= Main.posts.size()) {
             Post post = Main.posts.get(count - 1);
             try {
-                Timestamp timestamp = Timestamp.valueOf(post.post_time);
+//                Timestamp timestamp = Timestamp.valueOf(post.post_time);
                 stmt.setLong(1, post.post_id);
                 stmt.setString(2, post.title);
                 stmt.setString(3, post.content);
-                stmt.setTimestamp(4, timestamp);
+                stmt.setTimestamp(4, post.post_time);
                 stmt.executeUpdate();
 
             } catch (SQLException ex) {
