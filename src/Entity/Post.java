@@ -1,13 +1,15 @@
 package Entity;
 
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 //example
-public class Post {
+public class Post implements Serializable {
     public Long post_id;
     public String title;
     public String content;
-    public String post_time;
+    public Timestamp post_time;
     public Author author = new Author();
 
     public ArrayList<Author> follow = new ArrayList<>();
@@ -24,6 +26,6 @@ public class Post {
         this.post_id = post_id;
         this.title = title;
         this.content = content;
-        this.post_time = post_time;
+        this.post_time = Timestamp.valueOf(post_time);
     }
 }

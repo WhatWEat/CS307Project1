@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.sql.Timestamp;
 import java.util.*;
 /* TODO
     1. 在utility中完成cleardata的静态方法
@@ -36,6 +37,7 @@ public class Main {
 //        dataInputPre1.LOAD();
 //        dataInputTrans2.LOAD();
 //        dataInputBatch3.LOAD();
+        Utility.clearDataBase("jdbc:postgresql://localhost:5432/project1", "","");
         dataInputPara4.LOAD();
     }
 
@@ -99,7 +101,7 @@ public class Main {
                 Author author = new Author();
                 author.id = jsonObject.getString("Author's ID");
                 author.phoneNumber = jsonObject.getString("Author's Phone");
-                author.registerTime = jsonObject.getString("Author Registration Time");
+                author.registerTime = Timestamp.valueOf(jsonObject.getString("Author Registration Time"));
                 author.name = jsonObject.getString("Author");
                 if (!authors.contains(author)) {
                     authors.add(author);

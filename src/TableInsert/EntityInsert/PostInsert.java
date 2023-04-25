@@ -23,11 +23,11 @@ public class PostInsert extends BasicInfor implements Runnable {
             for (int i = 0; i < posts.size(); i++) {
                 Post post = posts.get(i);
                 try {
-                    Timestamp timestamp = Timestamp.valueOf(post.post_time);
+//                    Timestamp timestamp = Timestamp.valueOf(post.post_time);
                     sql.setLong(1, post.post_id);
                     sql.setString(2, post.title);
                     sql.setString(3, post.content);
-                    sql.setTimestamp(4, timestamp);
+                    sql.setTimestamp(4, post.post_time);
                     sql.executeUpdate();
                     if (i % BATCH_SIZE == 0) {
                         sql.executeBatch();

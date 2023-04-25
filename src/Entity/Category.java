@@ -1,8 +1,9 @@
 package Entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Category {
+public class Category implements Serializable {
     public static long id;
     public long Category_ID;
     public String category;

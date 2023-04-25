@@ -1,6 +1,8 @@
 package Entity;
 
-public class SubReply {
+import java.io.Serializable;
+
+public class SubReply implements Serializable {
     public static long id;
     public long subReply_ID;
     public String content;

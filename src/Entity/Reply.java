@@ -1,10 +1,11 @@
 package Entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
 // example of reply
-public class Reply {
+public class Reply implements Serializable {
     public static Long id = 0L;
     public long reply_Id;
     public String content;

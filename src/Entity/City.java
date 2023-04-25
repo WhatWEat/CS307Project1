@@ -1,8 +1,9 @@
 package Entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class City {
+public class City implements Serializable {
     public static long id = 0;
     public long City_ID;
     public String city;

@@ -1,4 +1,6 @@
 package Entity;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -6,11 +8,11 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Author {
+public class Author implements Serializable {
     public static long no_exist_id = 1000000000L;
     public static long get_exist_phone = (long) Math.pow(10,9);
     public String id;
-    public String registerTime;
+    public Timestamp registerTime;
     public String phoneNumber;
     public String name;
     public Author() {
@@ -24,7 +26,7 @@ public class Author {
 
     public Author(String id, String registerTime, String phoneNumber,String name) {
         this.id = id;
-        this.registerTime = registerTime;
+        this.registerTime = Timestamp.valueOf(registerTime);
         this.phoneNumber = phoneNumber;
         this.name = name;
     }
@@ -42,7 +44,7 @@ public class Author {
     public int hashCode() {
         return Objects.hash(id, registerTime, phoneNumber, name);
     }
-    public static String generateRandomDateTime() {
+    public static Timestamp generateRandomDateTime() {
         // Set the date format
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -55,6 +57,6 @@ public class Author {
         long randomDateTime = ThreadLocalRandom.current().nextLong(startDate.getTime(), endDate.getTime());
 
         // Convert the random date to a string
-        return dateFormat.format(new Date(randomDateTime));
+        return Timestamp.valueOf(dateFormat.format(new Date(randomDateTime)));
     }
 }
