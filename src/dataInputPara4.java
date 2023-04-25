@@ -53,55 +53,37 @@ public class dataInputPara4 {
         openDB(prop);
         BasicInfor.con = con;
         /*entity*/
-        loadData(Main.authors, "Author",
-            "INSERT INTO public.Author (author_id,registration_time,phone_number,name) " +
-                "VALUES (?,?,?,?);");
-        loadData(Main.posts, "Post",
-            "INSERT INTO public.Post (post_id,title,content,posting_time) " +
-                "VALUES (?,?,?,?);");
-        loadData(Main.categories, "Category",
-            "INSERT INTO public.Category (category_id,category) " +
-                "VALUES (?,?);");
-        loadData(Main.cities, "City", "INSERT INTO public.PostingCity (city_id,city,country) " +
-            "VALUES (?,?,?);");
-        loadData(Main.replies, "Reply", "INSERT INTO public.Reply (reply_id,content,stars) " +
-            "VALUES (?,?,?);");
+        loadData(Main.authors, "Author",BasicInfor.loadAuthor);
 
+        loadData(Main.posts, "Post",BasicInfor.loadPost);
+
+        loadData(Main.categories, "Category",BasicInfor.loadCategory);
+
+        loadData(Main.cities, "City", BasicInfor.loadCity);
+
+        loadData(Main.replies, "Reply", BasicInfor.loadReply);
         /*Post Relation*/
-        loadData(Main.posts, "AuthorWritePost",
-            "INSERT INTO public.AuthorWritePost (post_id,author_id) " + "VALUES (?,?);");
+        loadData(Main.posts, "AuthorWritePost",BasicInfor.loadAuthorWritePost);
 
-        loadData(Main.posts, "AuthorLikePost",
-            "INSERT INTO public.AuthorLikePost (post_id,author_id) " + "VALUES (?,?);");
+        loadData(Main.posts, "AuthorLikePost",BasicInfor.loadAuthorLikePost);
 
-        loadData(Main.posts, "AuthorSharePost",
-            "INSERT INTO public.AuthorSharePost (post_id,author_id) " + "VALUES (?,?);");
+        loadData(Main.posts, "AuthorSharePost",BasicInfor.loadAuthorSharePost);
 
-        loadData(Main.posts, "AuthorFavoritePost",
-            "INSERT INTO public.AuthorFavoritePost (post_id,author_id) " + "VALUES (?,?);");
+        loadData(Main.posts, "AuthorFavoritePost",BasicInfor.loadAuthorFavoritePost);
 
-        loadData(Main.posts, "AuthorFollowPost",
-            "INSERT INTO public.AuthorFollowPost (post_id,author_id) " + "VALUES (?,?);");
+        loadData(Main.posts, "AuthorFollowPost",BasicInfor.loadAuthorFollowPost);
 
-        loadData(Main.posts, "PostCategory",
-            "INSERT INTO public.PostCategory (category_id,post_id) " + "VALUES (?,?);");
+        loadData(Main.posts, "PostCategory",BasicInfor.loadPostCategory);
 
-        loadData(Main.posts, "PostCity",
-            "INSERT INTO public.PostCity (post_id,city_id) " + "VALUES (?,?);");
+        loadData(Main.posts, "PostCity",BasicInfor.loadPostCity);
 
-        loadData(Main.posts, "PostReply",
-            "INSERT INTO public.PostReply (post_id,reply_id) " + "VALUES (?,?);");
-
+        loadData(Main.posts, "PostReply",BasicInfor.loadReply);
         /*Author Relation*/
-        loadData(Main.replies, "AuthorReply",
-            "INSERT INTO public.AuthorReply (author_id,reply_id) " + "VALUES (?,?);");
+        loadData(Main.replies, "AuthorReply",BasicInfor.loadAuthorReply);
         /* SubReply*/
-        loadData(Main.replies, "SubReply",
-            "INSERT INTO public.SubReply (reply_id,sub_reply_id,content,stars) " +
-                "VALUES (?,?,?,?);");
-        loadData(Main.subReplies, "SubReplyAuthor",
-            "INSERT INTO public.SubReplyAuthor (author_id,sub_reply_id) " +
-                "VALUES (?,?);");
+        loadData(Main.replies, "SubReply",BasicInfor.loadSubReply);
+
+        loadData(Main.subReplies, "SubReplyAuthor",BasicInfor.loadSubReplyAuthor);
         closeDB();
         System.out.println("Finish!");
         System.out.println("Total time:" + Utility.getTotalTime() + "ms");

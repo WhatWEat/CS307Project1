@@ -117,10 +117,10 @@ public class dataInputBatch3 {
                 stmt.setString(3, author.phoneNumber);
                 stmt.setString(4, author.name);
                 stmt.addBatch();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -128,10 +128,10 @@ public class dataInputBatch3 {
         }
 
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -180,7 +180,7 @@ public class dataInputBatch3 {
         try {
 //            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
-//                stmt.clearBatch();
+                stmt.clearBatch();
 //            }
             con.commit();
         } catch (SQLException e) {
@@ -224,7 +224,7 @@ public class dataInputBatch3 {
         try {
 //            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
-//                stmt.clearBatch();
+                stmt.clearBatch();
 //            }
             con.commit();
         } catch (SQLException e) {
@@ -269,10 +269,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (counter % BATCH_SIZE != 1) {
+//            if (counter % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -304,10 +304,10 @@ public class dataInputBatch3 {
                     stmt.setLong(1, post.post_id);
                     stmt.setString(2, post.share.get(i).id);
                     stmt.addBatch();
-                    if (counter % BATCH_SIZE == 0) {
-                        stmt.executeBatch();
-                        stmt.clearBatch();
-                    }
+//                    if (counter % BATCH_SIZE == 0) {
+//                        stmt.executeBatch();
+//                        stmt.clearBatch();
+//                    }
                     counter++;
                 }
             } catch (SQLException ex) {
@@ -316,10 +316,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (counter % BATCH_SIZE != 1) {
+//            if (counter % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -352,10 +352,10 @@ public class dataInputBatch3 {
                     stmt.setLong(1, post.post_id);
                     stmt.setString(2, post.favorite.get(i).id);
                     stmt.addBatch();
-                    if (counter % BATCH_SIZE == 0) {
-                        stmt.executeBatch();
-                        stmt.clearBatch();
-                    }
+//                    if (counter % BATCH_SIZE == 0) {
+//                        stmt.executeBatch();
+//                        stmt.clearBatch();
+//                    }
                     counter++;
                 }
             } catch (SQLException ex) {
@@ -364,10 +364,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (counter % BATCH_SIZE != 1) {
+//            if (counter % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -399,10 +399,10 @@ public class dataInputBatch3 {
                     stmt.setLong(1, post.post_id);
                     stmt.setString(2, post.follow.get(i).id);
                     stmt.addBatch();
-                    if (counter % BATCH_SIZE == 0) {
-                        stmt.executeBatch();
-                        stmt.clearBatch();
-                    }
+//                    if (counter % BATCH_SIZE == 0) {
+//                        stmt.executeBatch();
+//                        stmt.clearBatch();
+//                    }
                     counter++;
                 }
             } catch (SQLException ex) {
@@ -411,10 +411,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (counter % BATCH_SIZE != 1) {
+//            if (counter % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -444,20 +444,20 @@ public class dataInputBatch3 {
                 stmt.setString(1, reply.author.id);
                 stmt.setLong(2, reply.reply_Id);
                 stmt.addBatch();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -487,20 +487,20 @@ public class dataInputBatch3 {
                 stmt.setLong(1, category.Category_ID);
                 stmt.setString(2, category.category);
                 stmt.addBatch();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -532,10 +532,10 @@ public class dataInputBatch3 {
                     stmt.setLong(1, post.categories.get(i).Category_ID);
                     stmt.setLong(2, post.post_id);
                     stmt.addBatch();
-                    if (counter % BATCH_SIZE == 0) {
-                        stmt.executeBatch();
-                        stmt.clearBatch();
-                    }
+//                    if (counter % BATCH_SIZE == 0) {
+//                        stmt.executeBatch();
+//                        stmt.clearBatch();
+//                    }
                     counter++;
                 }
             } catch (SQLException ex) {
@@ -544,10 +544,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (counter % BATCH_SIZE != 1) {
+//            if (counter % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -577,20 +577,20 @@ public class dataInputBatch3 {
                 stmt.setLong(1, post.post_id);
                 stmt.setLong(2, post.city.City_ID);
                 stmt.addBatch();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -621,20 +621,20 @@ public class dataInputBatch3 {
                 stmt.setString(2, city.city);
                 stmt.setString(3, city.country);
                 stmt.addBatch();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -666,10 +666,10 @@ public class dataInputBatch3 {
                     stmt.setLong(1, post.post_id);
                     stmt.setLong(2, post.replies.get(i).reply_Id);
                     stmt.addBatch();
-                    if (counter % BATCH_SIZE == 0) {
-                        stmt.executeBatch();
-                        stmt.clearBatch();
-                    }
+//                    if (counter % BATCH_SIZE == 0) {
+//                        stmt.executeBatch();
+//                        stmt.clearBatch();
+//                    }
                     counter++;
                 }
             } catch (SQLException ex) {
@@ -678,10 +678,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (counter % BATCH_SIZE != 1) {
+//            if (counter % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -712,20 +712,20 @@ public class dataInputBatch3 {
                 stmt.setString(2, reply.content);
                 stmt.setLong(3, reply.stars);
                 stmt.addBatch();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -760,10 +760,10 @@ public class dataInputBatch3 {
                     stmt.setString(3, reply.subReplies.get(i).content);
                     stmt.setLong(4, reply.subReplies.get(i).stars);
                     stmt.addBatch();
-                    if (counter % BATCH_SIZE == 0) {
-                        stmt.executeBatch();
-                        stmt.clearBatch();
-                    }
+//                    if (counter % BATCH_SIZE == 0) {
+//                        stmt.executeBatch();
+//                        stmt.clearBatch();
+//                    }
                     counter++;
                 }
             } catch (SQLException ex) {
@@ -772,10 +772,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (counter % BATCH_SIZE != 1) {
+//            if (counter % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -806,20 +806,20 @@ public class dataInputBatch3 {
                 stmt.setString(1, subReply.author.id);
                 stmt.setLong(2, subReply.subReply_ID);
                 stmt.addBatch();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
-            }
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
