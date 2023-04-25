@@ -25,7 +25,7 @@ public class PostCategoryInsert extends BasicInfor implements Runnable {
                     for (int j = 0; j < post.categories.size(); j++) {
                         sql.setLong(1, post.categories.get(j).Category_ID);
                         sql.setLong(2, post.post_id);
-                        sql.executeUpdate();
+                        sql.addBatch();
                         if (counter % BATCH_SIZE == 0) {
                             sql.executeBatch();
                             sql.clearBatch();

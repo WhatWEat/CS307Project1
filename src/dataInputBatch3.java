@@ -116,7 +116,7 @@ public class dataInputBatch3 {
                 stmt.setTimestamp(2, author.registerTime);
                 stmt.setString(3, author.phoneNumber);
                 stmt.setString(4, author.name);
-                stmt.executeUpdate();
+                stmt.addBatch();
                 if (count % BATCH_SIZE == 0) {
                     stmt.executeBatch();
                     stmt.clearBatch();
@@ -164,22 +164,24 @@ public class dataInputBatch3 {
                 stmt.setLong(1, post.post_id);
                 stmt.setString(2, post.title);
                 stmt.setString(3, post.content);
+              
                 stmt.setTimestamp(4, post.post_time);
-                stmt.executeUpdate();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+                stmt.addBatch();
+               if (count % BATCH_SIZE == 0) {
+                   stmt.executeBatch();
+                   stmt.clearBatch();
+               }
+
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
-                stmt.clearBatch();
-            }
+//                stmt.clearBatch();
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -208,11 +210,11 @@ public class dataInputBatch3 {
             try {
                 stmt.setLong(1, post.post_id);
                 stmt.setString(2, post.author.id);
-                stmt.executeUpdate();
-                if (count % BATCH_SIZE == 0) {
-                    stmt.executeBatch();
-                    stmt.clearBatch();
-                }
+                stmt.addBatch();
+//                if (count % BATCH_SIZE == 0) {
+//                    stmt.executeBatch();
+//                    stmt.clearBatch();
+//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -220,10 +222,10 @@ public class dataInputBatch3 {
             count++;
         }
         try {
-            if (count % BATCH_SIZE != 1) {
+//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
-                stmt.clearBatch();
-            }
+//                stmt.clearBatch();
+//            }
             con.commit();
         } catch (SQLException e) {
             System.err.println("Commit failed");
@@ -254,11 +256,11 @@ public class dataInputBatch3 {
                 for (int i = 0; i < post.like.size(); i++) {
                     stmt.setLong(1, post.post_id);
                     stmt.setString(2, post.like.get(i).id);
-                    stmt.executeUpdate();
-                    if (counter % BATCH_SIZE == 0) {
-                        stmt.executeBatch();
-                        stmt.clearBatch();
-                    }
+                    stmt.addBatch();
+//                    if (counter % BATCH_SIZE == 0) {
+//                        stmt.executeBatch();
+//                        stmt.clearBatch();
+//                    }
                     counter++;
                 }
             } catch (SQLException ex) {
@@ -301,7 +303,7 @@ public class dataInputBatch3 {
                 for (int i = 0; i < post.share.size(); i++) {
                     stmt.setLong(1, post.post_id);
                     stmt.setString(2, post.share.get(i).id);
-                    stmt.executeUpdate();
+                    stmt.addBatch();
                     if (counter % BATCH_SIZE == 0) {
                         stmt.executeBatch();
                         stmt.clearBatch();
@@ -349,7 +351,7 @@ public class dataInputBatch3 {
                 for (int i = 0; i < post.favorite.size(); i++) {
                     stmt.setLong(1, post.post_id);
                     stmt.setString(2, post.favorite.get(i).id);
-                    stmt.executeUpdate();
+                    stmt.addBatch();
                     if (counter % BATCH_SIZE == 0) {
                         stmt.executeBatch();
                         stmt.clearBatch();
@@ -396,7 +398,7 @@ public class dataInputBatch3 {
                 for (int i = 0; i < post.follow.size(); i++) {
                     stmt.setLong(1, post.post_id);
                     stmt.setString(2, post.follow.get(i).id);
-                    stmt.executeUpdate();
+                    stmt.addBatch();
                     if (counter % BATCH_SIZE == 0) {
                         stmt.executeBatch();
                         stmt.clearBatch();
@@ -441,7 +443,7 @@ public class dataInputBatch3 {
             try {
                 stmt.setString(1, reply.author.id);
                 stmt.setLong(2, reply.reply_Id);
-                stmt.executeUpdate();
+                stmt.addBatch();
                 if (count % BATCH_SIZE == 0) {
                     stmt.executeBatch();
                     stmt.clearBatch();
@@ -484,7 +486,7 @@ public class dataInputBatch3 {
             try {
                 stmt.setLong(1, category.Category_ID);
                 stmt.setString(2, category.category);
-                stmt.executeUpdate();
+                stmt.addBatch();
                 if (count % BATCH_SIZE == 0) {
                     stmt.executeBatch();
                     stmt.clearBatch();
@@ -529,7 +531,7 @@ public class dataInputBatch3 {
                 for (int i = 0; i < post.categories.size(); i++) {
                     stmt.setLong(1, post.categories.get(i).Category_ID);
                     stmt.setLong(2, post.post_id);
-                    stmt.executeUpdate();
+                    stmt.addBatch();
                     if (counter % BATCH_SIZE == 0) {
                         stmt.executeBatch();
                         stmt.clearBatch();
@@ -574,7 +576,7 @@ public class dataInputBatch3 {
             try {
                 stmt.setLong(1, post.post_id);
                 stmt.setLong(2, post.city.City_ID);
-                stmt.executeUpdate();
+                stmt.addBatch();
                 if (count % BATCH_SIZE == 0) {
                     stmt.executeBatch();
                     stmt.clearBatch();
@@ -618,7 +620,7 @@ public class dataInputBatch3 {
                 stmt.setLong(1, city.City_ID);
                 stmt.setString(2, city.city);
                 stmt.setString(3, city.country);
-                stmt.executeUpdate();
+                stmt.addBatch();
                 if (count % BATCH_SIZE == 0) {
                     stmt.executeBatch();
                     stmt.clearBatch();
@@ -663,7 +665,7 @@ public class dataInputBatch3 {
                 for (int i = 0; i < post.replies.size(); i++) {
                     stmt.setLong(1, post.post_id);
                     stmt.setLong(2, post.replies.get(i).reply_Id);
-                    stmt.executeUpdate();
+                    stmt.addBatch();
                     if (counter % BATCH_SIZE == 0) {
                         stmt.executeBatch();
                         stmt.clearBatch();
@@ -709,7 +711,7 @@ public class dataInputBatch3 {
                 stmt.setLong(1, reply.reply_Id);
                 stmt.setString(2, reply.content);
                 stmt.setLong(3, reply.stars);
-                stmt.executeUpdate();
+                stmt.addBatch();
                 if (count % BATCH_SIZE == 0) {
                     stmt.executeBatch();
                     stmt.clearBatch();
@@ -757,7 +759,7 @@ public class dataInputBatch3 {
                     stmt.setLong(2, reply.subReplies.get(i).subReply_ID);
                     stmt.setString(3, reply.subReplies.get(i).content);
                     stmt.setLong(4, reply.subReplies.get(i).stars);
-                    stmt.executeUpdate();
+                    stmt.addBatch();
                     if (counter % BATCH_SIZE == 0) {
                         stmt.executeBatch();
                         stmt.clearBatch();
@@ -803,7 +805,7 @@ public class dataInputBatch3 {
             try {
                 stmt.setString(1, subReply.author.id);
                 stmt.setLong(2, subReply.subReply_ID);
-                stmt.executeUpdate();
+                stmt.addBatch();
                 if (count % BATCH_SIZE == 0) {
                     stmt.executeBatch();
                     stmt.clearBatch();

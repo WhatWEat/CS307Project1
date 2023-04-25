@@ -25,7 +25,7 @@ public class AuthorWritePostInsert extends BasicInfor implements Runnable {
                 try {
                     sql.setLong(1, post.post_id);
                     sql.setString(2, post.author.id);
-                    sql.executeUpdate();
+                    sql.addBatch();
                     if (i % BATCH_SIZE == 0) {
                         sql.executeBatch();
                         sql.clearBatch();

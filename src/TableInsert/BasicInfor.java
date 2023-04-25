@@ -99,8 +99,12 @@ public class BasicInfor {
 
     public static <T> ArrayList<ArrayList<T>> splitRecords(ArrayList<T> records, int size) {
         ArrayList<ArrayList<T>> blocks = new ArrayList<>();
-        for (int i = 0; i < records.size(); i += size) {
-            blocks.add(new ArrayList<>(records.subList(i, Math.min(i + size, records.size()))));
+        if(size <= 1000) {
+            blocks.add(records);
+        } else {
+            for(int i = 0;i < records.size();i += size){
+                blocks.add(new ArrayList<>(records.subList(i, Math.min(i + size, records.size()))));
+            }
         }
         return blocks;
     }

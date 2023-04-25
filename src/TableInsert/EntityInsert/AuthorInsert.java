@@ -26,7 +26,7 @@ public class AuthorInsert extends BasicInfor implements Runnable{
                 sql.setTimestamp(2, author.registerTime);
                 sql.setString(3, author.phoneNumber);
                 sql.setString(4, author.name);
-                sql.executeUpdate();
+                sql.addBatch();
                 if (i % BATCH_SIZE == 0) {
                     sql.executeBatch();
                     sql.clearBatch();
