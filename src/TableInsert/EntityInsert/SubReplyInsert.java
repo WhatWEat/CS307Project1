@@ -36,6 +36,7 @@ public class SubReplyInsert extends BasicInfor implements Runnable {
                         counter++;
                     }
                 } catch (SQLException ex) {
+                    System.err.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
             }

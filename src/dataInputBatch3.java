@@ -216,6 +216,7 @@ public class dataInputBatch3 {
 //                    stmt.clearBatch();
 //                }
             } catch (SQLException ex) {
+                System.out.println("AuthorWritePost执行失败");
                 throw new RuntimeException(ex);
             }
 

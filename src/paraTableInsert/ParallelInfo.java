@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 public class ParallelInfo {
     public static Connection con = null;
-    public static final int totalTable = 16;
+    public static final int totalTable = 6;
     public static final int parallel = 6;
     protected static CountDownLatch startSignal;
     protected static CountDownLatch doneSignal;
