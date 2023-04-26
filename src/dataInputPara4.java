@@ -45,7 +45,7 @@ public class dataInputPara4 {
     Total time:1204ms
     Average speed: 7605.481727574751records/s
     * */
-    private static final int BLOCK_COUNT = 4;
+    private static final int BLOCK_COUNT = 12;
     private static Connection con = null;
 
     public static void LOAD() {
@@ -87,6 +87,7 @@ public class dataInputPara4 {
         closeDB();
         System.out.println("Finish!");
         System.out.println("Total time:" + Utility.getTotalTime() + "ms");
+        System.out.println("Total Term:" + Utility.termNumber);
         System.out.println("Average speed: " + Utility.getAverageTime() + "records/s");
     }
 
@@ -208,21 +209,25 @@ public class dataInputPara4 {
         }
         long start = 0, end = 0;
         try {
-            System.out.println("All tasks submitted! Waiting for command to start...");
+//            System.out.println("All tasks submitted! Waiting for command to start...");
             Thread.sleep(500); // 模拟等待500ms
             //开始计时
             start = System.currentTimeMillis();
             startSignal.countDown();
-            //PreparedStatement ps = con.prepareStatement(sql);//计算预编译SQL的时间
+            //计算预编译SQL的时间
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.close();
             doneSignal.await();
             //计时结束
             end = System.currentTimeMillis();
             executor.shutdown();
-            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+//            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
             // Handle interruption
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        System.out.println(tableName + "时间" + (end - start));
+        //System.out.println(tableName + "时间" + (end - start));
         Utility.addCount(end - start, count, tableName);
     }
 

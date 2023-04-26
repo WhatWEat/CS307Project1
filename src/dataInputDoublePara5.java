@@ -121,10 +121,7 @@ public class dataInputDoublePara5 {
             stmt = con.prepareStatement(BasicInfor.loadAuthorReply);stmt.close();
             stmt = con.prepareStatement(BasicInfor.loadSubReplyAuthor);stmt.close();
             executor.shutdown();
-            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-        } catch (InterruptedException e) {
-            System.err.println(e.getMessage());
-            throw new RuntimeException(e);
+//            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

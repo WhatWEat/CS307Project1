@@ -10,12 +10,14 @@ public class Utility {
     public static long totalTime = 0;
     public static Random random = new Random();
 
+    public static int mul = 2;
+
     public static void addCount(long dis, long count, String name) {
         termNumber += count;
         totalTime += dis;
         double timeUnit = (count * 1000.0) / dis;
-        System.out.println(count + name + " records successfully loaded");
-        System.out.println("Loading speed : " + timeUnit + " records/s");
+//        System.out.println(count + name + " records successfully loaded");
+//        System.out.println("Loading speed : " + timeUnit + " records/s");
     }
 
     public static long getTotalTime() {
@@ -43,11 +45,12 @@ public class Utility {
 
             // 清空表中所有数据
             ArrayList<String> SQL = getSql("src\\sql.txt");
+
             for (String sql : SQL) {
                 stmt.executeUpdate(sql);
             }
 
-            System.out.println("Clear database completed");
+//            System.out.println("Clear database completed");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -207,12 +210,21 @@ public class Utility {
         ArrayList<Post> posts = new ArrayList<>();
         ArrayList<Reply> replies = new ArrayList<>();
         ArrayList<SubReply> subReplies = new ArrayList<>();
-        int lengthAuthor = 2000;
-        int lengthCategory = 20;
-        int lengthCity = 10;
-        int lengthPost = 100;
-        int lengthReply = 200;
-        int lengthSub = 500;
+        int lengthAuthor = 100000;
+        int lengthCategory = 2000;
+        int lengthCity = 1000;
+        int lengthPost = 10000;
+        int lengthReply = 20000;
+        int lengthSub = 50000;
+
+
+        lengthCategory*=mul;
+        lengthAuthor*=mul;
+        lengthSub*=mul;
+        lengthPost*=mul;
+        lengthReply*=mul;
+        lengthCity*=mul;
+
         randomData(authors, lengthAuthor, categories, lengthCategory, cities, lengthCity
                 , posts, lengthPost, replies, lengthReply, subReplies, lengthSub);
         try {

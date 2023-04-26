@@ -22,22 +22,32 @@ public class Main {
     public static ArrayList<SubReply> subReplies = new ArrayList<>();
 
     public static void main(String[] args) {
-//        Utility.storeData();
-        loadData(authors,categories,cities,posts,replies,subReplies);
+
+            Utility.storeData();
+            loadData(authors, categories, cities, posts, replies, subReplies);
 
 //        loadPost();
 //        loadReply();
-        System.out.println();
+//        System.out.println();
 //        System.out.println("author_id,registration_time,phone_number,author_name");
 //        for (Author author : authors) {
 //            System.out.println(author.id + ";" + author.registerTime + ";" + author.phoneNumber + ";" + author.name);
 //        }
+//        Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres","zws20030310");
 //        dataInputPre1.LOAD();
-//        dataInputTrans2.LOAD();
-//        dataInputBatch3.LOAD();
-//        Utility.clearDataBase("jdbc:postgresql://localhost:5432/project1", "","");
-        dataInputPara4.LOAD();
-//        dataInputDoublePara5.LOAD();
+
+//            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
+//            dataInputTrans2.LOAD();
+//            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
+//            dataInputBatch3.LOAD();
+//            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
+//            dataInputPara4.LOAD();
+            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
+            dataInputDoublePara5.LOAD();
+            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
+            Utility.mul++;
+            System.out.println("\n\n\n");
+
     }
 
     static Author createAuthor(String name) {
