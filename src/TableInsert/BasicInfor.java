@@ -93,11 +93,11 @@ public class BasicInfor {
 
     public void finalCommit(long count) {
         try {
-            if (count % BATCH_SIZE != 0) {
+            if ((count - 1) % BATCH_SIZE != 0) {
                 sql.executeBatch();
+                con.commit();
+                sql.close();
             }
-            con.commit();
-            sql.close();
         } catch (SQLException s) {
             System.err.println(s.getMessage());
             throw new RuntimeException(s);
@@ -118,12 +118,9 @@ public class BasicInfor {
 
     public static <T> ArrayList<ArrayList<T>> splitRecords(ArrayList<T> records, int size) {
         ArrayList<ArrayList<T>> blocks = new ArrayList<>();
-        if (size <= 1000) {
-            blocks.add(records);
-        } else {
-            for (int i = 0; i < records.size(); i += size) {
-                blocks.add(new ArrayList<>(records.subList(i, Math.min(i + size, records.size()))));
-            }
+        size = Math.max(2000, size);
+        for (int i = 0; i < records.size(); i += size) {
+            blocks.add(new ArrayList<>(records.subList(i, Math.min(i + size, records.size()))));
         }
         return blocks;
     }

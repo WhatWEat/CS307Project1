@@ -55,35 +55,35 @@ public class dataInputPara4 {
         /*entity*/
         loadData(Main.authors, "Author",BasicInfor.loadAuthor);
 
-        loadData(Main.posts, "Post",BasicInfor.loadPost);
-
-        loadData(Main.categories, "Category",BasicInfor.loadCategory);
-
-        loadData(Main.cities, "City", BasicInfor.loadCity);
-
-        loadData(Main.replies, "Reply", BasicInfor.loadReply);
-        /*Post Relation*/
-        loadData(Main.posts, "AuthorWritePost",BasicInfor.loadAuthorWritePost);
-
-        loadData(Main.posts, "AuthorLikePost",BasicInfor.loadAuthorLikePost);
-
-        loadData(Main.posts, "AuthorSharePost",BasicInfor.loadAuthorSharePost);
-
-        loadData(Main.posts, "AuthorFavoritePost",BasicInfor.loadAuthorFavoritePost);
-
-        loadData(Main.posts, "AuthorFollowPost",BasicInfor.loadAuthorFollowPost);
-
-        loadData(Main.posts, "PostCategory",BasicInfor.loadPostCategory);
-
-        loadData(Main.posts, "PostCity",BasicInfor.loadPostCity);
-
-        loadData(Main.posts, "PostReply",BasicInfor.loadPostReply);
-        /*Author Relation*/
-        loadData(Main.replies, "AuthorReply",BasicInfor.loadAuthorReply);
-        /* SubReply*/
-        loadData(Main.replies, "SubReply",BasicInfor.loadSubReply);
-
-        loadData(Main.subReplies, "SubReplyAuthor",BasicInfor.loadSubReplyAuthor);
+//        loadData(Main.posts, "Post",BasicInfor.loadPost);
+//
+//        loadData(Main.categories, "Category",BasicInfor.loadCategory);
+//
+//        loadData(Main.cities, "City", BasicInfor.loadCity);
+//
+//        loadData(Main.replies, "Reply", BasicInfor.loadReply);
+//        /*Post Relation*/
+//        loadData(Main.posts, "AuthorWritePost",BasicInfor.loadAuthorWritePost);
+//
+//        loadData(Main.posts, "AuthorLikePost",BasicInfor.loadAuthorLikePost);
+//
+//        loadData(Main.posts, "AuthorSharePost",BasicInfor.loadAuthorSharePost);
+//
+//        loadData(Main.posts, "AuthorFavoritePost",BasicInfor.loadAuthorFavoritePost);
+//
+//        loadData(Main.posts, "AuthorFollowPost",BasicInfor.loadAuthorFollowPost);
+//
+//        loadData(Main.posts, "PostCategory",BasicInfor.loadPostCategory);
+//
+//        loadData(Main.posts, "PostCity",BasicInfor.loadPostCity);
+//
+//        loadData(Main.posts, "PostReply",BasicInfor.loadPostReply);
+//        /*Author Relation*/
+//        loadData(Main.replies, "AuthorReply",BasicInfor.loadAuthorReply);
+//        /* SubReply*/
+//        loadData(Main.replies, "SubReply",BasicInfor.loadSubReply);
+//
+//        loadData(Main.subReplies, "SubReplyAuthor",BasicInfor.loadSubReplyAuthor);
         closeDB();
         System.out.println("Finish!");
         System.out.println("Total time:" + Utility.getTotalTime() + "ms");
