@@ -9,23 +9,23 @@
 --          join countries c
 --               on m.country = c.country_code
 -- limit 1 offset 10;
-
 DROP TABLE IF EXISTS
-    PostReply, AuthorReply,PostingCity, PostCity, AuthorWritePost,AuthorFavoritePost, AuthorLikePost, AuthorSharePost,SubReplyAuthor,AuthorFollowPost,
+    PostReply, AuthorReply,PostingCity, PostCity, AuthorWritePost,AuthorFavoritePost, AuthorLikePost, AuthorSharePost,SubReplyAuthor,AuthorFollowAuthor,
     SubReply,Author,Reply,Post, Category, PostCategory;
+
 CREATE TABLE IF NOT EXISTS Author
 (
     author_id         VARCHAR(20) primary key,
     registration_time TIMESTAMP          not null,
     phone_number      VARCHAR(20) unique not null,
     name              varchar(50) unique not null
-    );
+);
 CREATE TABLE IF NOT EXISTS Reply
 (
     reply_id BIGINT primary key,
     content  VARCHAR(1000) not null,
     stars    BIGINT
-    );
+);
 -- author and reply relationship
 CREATE TABLE IF NOT EXISTS AuthorReply
 (
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS AuthorReply
     foreign key (reply_id) references Reply (reply_id),
 
     primary key (reply_id, author_id)
-    );
+);
 -- weak entity set for subreply
 CREATE TABLE IF NOT EXISTS SubReply
 (
@@ -48,14 +48,14 @@ CREATE TABLE IF NOT EXISTS SubReply
     foreign key (reply_id) references Reply (reply_id),
 
     primary key (reply_id, sub_reply_id)
-    );
+);
 CREATE TABLE IF NOT EXISTS Post
 (
     post_id      BIGINT primary key,
     title        VARCHAR(100)  not null,
     content      VARCHAR(1000) not null,
     posting_time TIMESTAMP     not null
-    );
+);
 -- post and reply relationship
 CREATE TABLE IF NOT EXISTS PostReply
 (
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS PostReply
     foreign key (reply_id) references Reply (reply_id),
 
     primary key (reply_id, post_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS PostingCity
 (
@@ -76,13 +76,13 @@ CREATE TABLE IF NOT EXISTS PostingCity
 
     CONSTRAINT country_city UNIQUE (city, country)
 
-    );
+);
 
 CREATE TABLE IF NOT EXISTS Category
 (
     category_id BIGINT primary key,
     category    varchar(30) not null
-    );
+);
 
 CREATE TABLE IF NOT EXISTS PostCity
 (
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS PostCity
     foreign key (city_id) references PostingCity (city_id),
 
     primary key (post_id, city_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS PostCategory
 (
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS PostCategory
     foreign key (post_id) references Post (post_id),
 
     primary key (category_id, post_id)
-    );
+);
 CREATE TABLE IF NOT EXISTS SubReplyAuthor
 (
     author_id    varchar(20) not null,
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS SubReplyAuthor
     foreign key (sub_reply_id) references SubReply (sub_reply_id),
 
     primary key (author_id, sub_reply_id)
-    );
+);
 CREATE TABLE IF NOT EXISTS AuthorWritePost
 (
     post_id   BIGINT      not null,
@@ -124,18 +124,18 @@ CREATE TABLE IF NOT EXISTS AuthorWritePost
     foreign key (author_id) references Author (author_id),
 
     primary key (post_id, author_id)
-    );
+);
 
-CREATE TABLE IF NOT EXISTS AuthorFollowPost
+CREATE TABLE IF NOT EXISTS AuthorFollowAuthor
 (
-    post_id   BIGINT      not null,
-    author_id varchar(20) not null,
+    author_id    varchar(20) not null,
+    follower_id varchar(20) not null,
 
-    foreign key (post_id) references post (post_id),
     foreign key (author_id) references Author (author_id),
+    foreign key (follower_id) references Author (author_id),
 
-    primary key (post_id, author_id)
-    );
+    primary key (author_id, follower_id)
+);
 
 CREATE TABLE IF NOT EXISTS AuthorFavoritePost
 (
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS AuthorFavoritePost
     foreign key (author_id) references Author (author_id),
 
     primary key (post_id, author_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS AuthorLikePost
 (
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS AuthorLikePost
     foreign key (author_id) references Author (author_id),
 
     primary key (post_id, author_id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS AuthorSharePost
 (
@@ -168,4 +168,5 @@ CREATE TABLE IF NOT EXISTS AuthorSharePost
     foreign key (author_id) references Author (author_id),
 
     primary key (post_id, author_id)
-    );
+);
+select count(*) from author;
