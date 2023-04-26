@@ -3,8 +3,7 @@ import Entity.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.*;
 /* TODO
@@ -23,8 +22,11 @@ public class Main {
     public static ArrayList<SubReply> subReplies = new ArrayList<>();
 
     public static void main(String[] args) {
-        loadPost();
-        loadReply();
+//        Utility.storeData();
+        loadData(authors,categories,cities,posts,replies,subReplies);
+
+//        loadPost();
+//        loadReply();
         System.out.println();
 //        System.out.println("author_id,registration_time,phone_number,author_name");
 //        for (Author author : authors) {
@@ -34,8 +36,8 @@ public class Main {
 //        dataInputTrans2.LOAD();
 //        dataInputBatch3.LOAD();
 //        Utility.clearDataBase("jdbc:postgresql://localhost:5432/project1", "","");
-//        dataInputPara4.LOAD();
-        dataInputDoublePara5.LOAD();
+        dataInputPara4.LOAD();
+//        dataInputDoublePara5.LOAD();
     }
 
     static Author createAuthor(String name) {
@@ -225,5 +227,48 @@ public class Main {
         return city1;
     }
 
+    public static void loadData(ArrayList<Author> authors,
+                                ArrayList<Category> categories,
+                                ArrayList<City> cities,
+                                ArrayList<Post> posts,
+                                ArrayList<Reply> replies,
+                                ArrayList<SubReply> subReplies){
+        try {
+            FileInputStream fileIn = new FileInputStream("datas/dataOfAuthor.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            authors.addAll((ArrayList<Author>) in.readObject());
 
+            fileIn = new FileInputStream("datas/dataOfCategory.ser");
+            in = new ObjectInputStream(fileIn);
+            categories.addAll((ArrayList<Category>) in.readObject());
+
+            fileIn = new FileInputStream("datas/dataOfCity.ser");
+            in = new ObjectInputStream(fileIn);
+            cities.addAll( (ArrayList<City>) in.readObject());
+
+            fileIn = new FileInputStream("datas/dataOfPost.ser");
+            in = new ObjectInputStream(fileIn);
+            posts.addAll((ArrayList<Post>) in.readObject());
+
+            fileIn = new FileInputStream("datas/dataOfReply.ser");
+            in = new ObjectInputStream(fileIn);
+            replies.addAll ((ArrayList<Reply>) in.readObject());
+
+            fileIn = new FileInputStream("datas/dataOfSubReply.ser");
+            in = new ObjectInputStream(fileIn);
+            subReplies.addAll ((ArrayList<SubReply>) in.readObject());
+
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+            return;
+        } catch (ClassNotFoundException c) {
+            System.out.println("Class not found");
+            c.printStackTrace();
+            return;
+        }
+
+
+    }
 }

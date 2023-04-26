@@ -80,12 +80,12 @@ public class Utility {
         return strings;
     }
 
-    public static void randomData(ArrayList<Author> authors,int lengthAuthor,
+    public static void randomData(ArrayList<Author> authors, int lengthAuthor,
                                   ArrayList<Category> categories, int lengthCategory,
-                                  ArrayList<City> cities,int lengthCity,
-                                  ArrayList<Post> posts,int lengthPost,
-                                  ArrayList<Reply> replies,int lengthReply,
-                                  ArrayList<SubReply> subReplies,int lengthSub) {
+                                  ArrayList<City> cities, int lengthCity,
+                                  ArrayList<Post> posts, int lengthPost,
+                                  ArrayList<Reply> replies, int lengthReply,
+                                  ArrayList<SubReply> subReplies, int lengthSub) {
         //category
         HashSet<String> strings = new HashSet<>();
         while (strings.size() < lengthCategory) {
@@ -95,19 +95,20 @@ public class Utility {
         for (String element : strings) {
             categories.add(new Category(element));
         }
-
+        strings.clear();
         //author
         for (int i = 0; i < lengthAuthor; i++) {
-            String temp = randomString(50);
+            String temp = randomString(40);
             strings.add(temp);
         }
         for (String element : strings) {
             authors.add(new Author(element));
         }
+
         //city
         Iterator<String> iterator = strings.iterator();
-        while (strings.size() < lengthCity*2) {
-            String temp = randomString(50);
+        while (strings.size() < lengthCity * 2) {
+            String temp = randomString(40);
             strings.add(temp);
         }
         for (int i = 0; i < lengthCity; i++) {
@@ -115,7 +116,7 @@ public class Utility {
             String element2 = iterator.next();
             cities.add(new City(element1, element2));
         }
-
+        strings.clear();
         //post
         for (int i = 0; i < lengthPost; i++) {
             int randomInt = random.nextInt(lengthAuthor);
@@ -129,8 +130,8 @@ public class Utility {
             randomInt = random.nextInt(lengthCity);
             City city = cities.get(randomInt);
 
-            String title = randomString(100);
-            String content = randomString(1000);
+            String title = randomString(80);
+            String content = randomString(800);
 
             Post post = new Post((long) i, title, content, timestamp.toString());
             post.author = author;
@@ -177,7 +178,7 @@ public class Utility {
             int randomInt = random.nextInt(lengthAuthor);
             Author author = authors.get(randomInt);
             long star = random.nextLong(10000);
-            String content = randomString(1000);
+            String content = randomString(800);
             Reply reply = new Reply(content, star, author);
             reply.reply_Id = i;
             replies.add(reply);
@@ -206,14 +207,14 @@ public class Utility {
         ArrayList<Post> posts = new ArrayList<>();
         ArrayList<Reply> replies = new ArrayList<>();
         ArrayList<SubReply> subReplies = new ArrayList<>();
-        int lengthAuthor = 200000;
-        int lengthCategory = 2000;
-        int lengthCity = 1000;
-        int lengthPost = 10000;
-        int lengthReply = 20000;
-        int lengthSub = 50000;
-        randomData(authors,lengthAuthor,categories,lengthCategory,cities,lengthCity
-                ,posts,lengthPost,replies,lengthReply,subReplies,lengthSub);
+        int lengthAuthor = 2000;
+        int lengthCategory = 20;
+        int lengthCity = 10;
+        int lengthPost = 100;
+        int lengthReply = 200;
+        int lengthSub = 500;
+        randomData(authors, lengthAuthor, categories, lengthCategory, cities, lengthCity
+                , posts, lengthPost, replies, lengthReply, subReplies, lengthSub);
         try {
             FileOutputStream fos = new FileOutputStream("datas\\dataOfAuthor.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -273,5 +274,6 @@ public class Utility {
         }
         return out.toString();
     }
+
 
 }
