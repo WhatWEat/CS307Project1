@@ -28,6 +28,7 @@ public abstract class EntityTable<T> extends ParallelInfo implements Runnable{
             subDoneSignal.await();
             executorTable.shutdown();
         } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
             throw new RuntimeException(e);
         } finally {
             doneSignal.countDown();

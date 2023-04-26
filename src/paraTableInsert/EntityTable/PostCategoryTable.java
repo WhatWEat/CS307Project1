@@ -1,7 +1,7 @@
 package paraTableInsert.EntityTable;
 
 import Entity.Post;
-import TableInsert.RelationInsert.PostCityInsert;
+import TableInsert.RelationInsert.PostCategoryInsert;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
@@ -14,6 +14,6 @@ public class PostCategoryTable extends EntityTable<Post>{
     @Override
     protected Runnable createInsertRunnable(ArrayList<Post> block, CountDownLatch subStartSignal,
         CountDownLatch subDoneSignal) {
-        return new PostCityInsert(sql, block, subStartSignal, subDoneSignal);
+        return new PostCategoryInsert(sql, block, subStartSignal, subDoneSignal);
     }
 }

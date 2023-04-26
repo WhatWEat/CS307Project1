@@ -26,10 +26,6 @@ public class Main {
         loadPost();
         loadReply();
         System.out.println();
-        /* TODO:
-            1. try to finish the loadReply() static method in Main.java like loadPost() method
-            2. start to design the framework of the insert part
-        */
 //        System.out.println("author_id,registration_time,phone_number,author_name");
 //        for (Author author : authors) {
 //            System.out.println(author.id + ";" + author.registerTime + ";" + author.phoneNumber + ";" + author.name);
@@ -38,8 +34,8 @@ public class Main {
 //        dataInputTrans2.LOAD();
 //        dataInputBatch3.LOAD();
 //        Utility.clearDataBase("jdbc:postgresql://localhost:5432/project1", "","");
-        dataInputPara4.LOAD();
-//        dataInputDoublePara5.LOAD();
+//        dataInputPara4.LOAD();
+        dataInputDoublePara5.LOAD();
     }
 
     static Author createAuthor(String name) {

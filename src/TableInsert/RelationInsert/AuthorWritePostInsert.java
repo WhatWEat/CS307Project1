@@ -31,6 +31,8 @@ public class AuthorWritePostInsert extends BasicInfor implements Runnable {
                         sql.clearBatch();
                     }
                 } catch (SQLException ex) {
+                    System.err.println(ex.getMessage());
+                    System.out.println(ex.getNextException().getMessage());
                     throw new RuntimeException(ex);
                 }
             }

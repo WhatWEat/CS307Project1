@@ -8,7 +8,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class PostReplyInsert extends BasicInfor implements Runnable {
 
-    ArrayList<Post> posts = new ArrayList<>();
+    ArrayList<Post> posts;
 
     public PostReplyInsert(String sql, ArrayList<Post> posts, CountDownLatch startSignal,
         CountDownLatch doneSignal) {

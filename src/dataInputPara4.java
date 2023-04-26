@@ -77,7 +77,7 @@ public class dataInputPara4 {
 
         loadData(Main.posts, "PostCity",BasicInfor.loadPostCity);
 
-        loadData(Main.posts, "PostReply",BasicInfor.loadReply);
+        loadData(Main.posts, "PostReply",BasicInfor.loadPostReply);
         /*Author Relation*/
         loadData(Main.replies, "AuthorReply",BasicInfor.loadAuthorReply);
         /* SubReply*/
@@ -213,7 +213,7 @@ public class dataInputPara4 {
             //开始计时
             start = System.currentTimeMillis();
             startSignal.countDown();
-            PreparedStatement ps = con.prepareStatement(sql);//计算预编译SQL的时间
+            //PreparedStatement ps = con.prepareStatement(sql);//计算预编译SQL的时间
             doneSignal.await();
             //计时结束
             end = System.currentTimeMillis();
@@ -221,8 +221,6 @@ public class dataInputPara4 {
             executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
             // Handle interruption
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         System.out.println(tableName + "时间" + (end - start));
         Utility.addCount(end - start, count, tableName);

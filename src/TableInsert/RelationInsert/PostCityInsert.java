@@ -3,6 +3,7 @@ package TableInsert.RelationInsert;
 import Entity.Post;
 import TableInsert.BasicInfor;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
@@ -31,6 +32,8 @@ public class PostCityInsert extends BasicInfor implements Runnable {
                         sql.clearBatch();
                     }
                 } catch (SQLException ex) {
+                    System.err.println(ex.getMessage());
+                    System.err.println(ex.getNextException().getMessage());
                     throw new RuntimeException(ex);
                 }
             }
