@@ -111,24 +111,17 @@ public class dataInputBatch3 {
         while (count <= Main.authors.size()) {
             Author author = Main.authors.get(count - 1);
             try {
-//                Timestamp timestamp = Timestamp.valueOf(author.registerTime);
                 stmt.setString(1, author.id);
                 stmt.setTimestamp(2, author.registerTime);
                 stmt.setString(3, author.phoneNumber);
                 stmt.setString(4, author.name);
                 stmt.addBatch();
-//                if (count % BATCH_SIZE == 0) {
-//                    stmt.executeBatch();
-//                    stmt.clearBatch();
-//                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
             count++;
         }
-
         try {
-//            if (count % BATCH_SIZE != 1) {
                 stmt.executeBatch();
                 stmt.clearBatch();
 
@@ -139,7 +132,6 @@ public class dataInputBatch3 {
             closeDB();
             System.exit(1);
         }
-
         long end = System.currentTimeMillis();
         Utility.addCount(end - start, count, "Author");
     }
