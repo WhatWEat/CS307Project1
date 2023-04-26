@@ -93,7 +93,7 @@ public class BasicInfor {
 
     public void finalCommit(long count) {
         try {
-            if (count % BATCH_SIZE != 0) {
+            if ((count - 1) % BATCH_SIZE != 0) {
                 sql.executeBatch();
             }
             con.commit();
