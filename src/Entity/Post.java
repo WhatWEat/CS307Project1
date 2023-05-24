@@ -12,7 +12,7 @@ public class Post implements Serializable {
     public String content;
     public Timestamp post_time;
     public Author author = new Author();
-    public Long shared = 0L;
+    public Long shared = -1L;
 
     public ArrayList<Author> follow = new ArrayList<>();
     public ArrayList<Author> like = new ArrayList<>();
