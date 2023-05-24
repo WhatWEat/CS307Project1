@@ -3,7 +3,7 @@ package Entity;
 import java.io.Serializable;
 
 public class SubReply implements Serializable {
-    public static long id;
+    public static long id = 10000L;
     public long subReply_ID;
     public String content;
     public long stars;

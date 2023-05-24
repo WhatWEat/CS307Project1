@@ -23,11 +23,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-            Utility.storeData();
-            loadData(authors, categories, cities, posts, replies, subReplies);
 
-//        loadPost();
-//        loadReply();
+        loadPost();
+        loadReply();
+        dataInputProject2.importData();
+        System.out.println();
 //        System.out.println();
 //        System.out.println("author_id,registration_time,phone_number,author_name");
 //        for (Author author : authors) {
@@ -42,11 +42,11 @@ public class Main {
 //            dataInputBatch3.LOAD();
 //            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
 //            dataInputPara4.LOAD();
-            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
-            dataInputDoublePara5.LOAD();
-            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
-            Utility.mul++;
-            System.out.println("\n\n\n");
+//            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
+//            dataInputDoublePara5.LOAD();
+//            Utility.clearDataBase("jdbc:postgresql://localhost:5432/Lab9", "postgres", "zws20030310");
+//            Utility.mul++;
+//            System.out.println("\n\n\n");
 
     }
 

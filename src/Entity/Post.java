@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 //example
 public class Post implements Serializable {
+
     public Long post_id;
     public String title;
     public String content;
     public Timestamp post_time;
     public Author author = new Author();
+    public Long shared = -1L;
 
     public ArrayList<Author> follow = new ArrayList<>();
     public ArrayList<Author> like = new ArrayList<>();
@@ -27,5 +29,15 @@ public class Post implements Serializable {
         this.title = title;
         this.content = content;
         this.post_time = Timestamp.valueOf(post_time);
+    }
+
+    public Post(Long post_id,String title, String content, Timestamp post_time, Author author,
+        Long shared) {
+        this.post_id = post_id;
+        this.title = title;
+        this.content = content;
+        this.post_time = post_time;
+        this.author = author;
+        this.shared = shared;
     }
 }
